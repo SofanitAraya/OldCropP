@@ -19,6 +19,8 @@ TwoPointsPlot function takes the ID for the two pixels within the region of inte
 }
 \examples{
 TwoPointsPlot(154,125)
+# The function results two time series vegetation index curves together at the plot pannel
+
 }
 \author{
 Sofanit Araya

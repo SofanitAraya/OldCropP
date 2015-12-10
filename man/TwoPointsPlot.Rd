@@ -18,7 +18,9 @@ Two time series curves together in a single plot (The first point represented as
 TwoPointsPlot function takes the ID for the two pixels within the region of interst. The function returns, the timeseries curves ploted together. The Id numbers can be obtained from the ASCII file outputs.
 }
 \examples{
-TwoPointsPlot(154,125)
+TwoPointsPlot(114,125)
+# The function results two time series vegetation index curves together at the plot pannel
+
 }
 \author{
 Sofanit Araya

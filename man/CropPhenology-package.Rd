@@ -28,6 +28,6 @@ Time series
 PhenoMetrics (), TWoPointsPlot ()
 }
 \examples{
-PhenoMetrics("E:/MODIS/2014", FALSE)
+PhenoMetrics(system.file("extdata/data1", package="CropPhenology"), FALSE)
 TwoPointsPlot(251,247)
 }

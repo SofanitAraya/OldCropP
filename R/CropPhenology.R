@@ -16,14 +16,47 @@
 #' @author   Sofanit Araya
 #' @keywords Phenology, remote sensing, satellite image
 #' @seealso TwoPointsPlot (Id1, Id2)
-#' @description Extract major phenologic parameters from time series vegetaion index data. Total of 11 phenologic metrics as raster and Ascii files. The function takes path of the vegetation index data and the boolean Value for BolAOI (True- if there is AOI polygon, FALSE- if the parameters are calculated for the whole region).
+#' @description This function extracts major phenologic parameters from time series vegetaion index data. Total of 11 phenologic metrics as raster and Ascii files. The function takes path of the vegetation index data and the boolean Value for BolAOI (True- if there is AOI polygon, FALSE- if the parameters are calculated for the whole region).
 #' @param Rawpath - Text value - the path where the time series images saved 
 #' @param BolAOI-  Logical value - if there is any area of intererst or not
 #' @export
-#' @examples PhenoMetrics("E:/MODIS/2005", TRUE)
-#' @examples PhenoMetrics("E:/MODIS/2006/myarea", FALSE)
-#' @references Araya etal.(2015)
+#' @details
+#'Remote sensing phenology also called Land Surface Phenology refers to observation of seasonal pattern of vegetation changes using remote sensing vegetation indices (Reed etal. 2009).
+#'Remotely sensed vegetation phenology has been used for many ecological studies including as an indicator for climate change (Kramer et al.,2000; White et al., 1997), to estimate agricultural productivity (Hill and Donald, 2003; Labus et al., 2002; Sakamoto et al., 2013), regional management for crop type mapping (Brown et al., 2013; Niazmardi et al., 2013), as an indicator of soil Plant Available Water Holding Capacity (PAWC) variability across a farm (Araya etal. 2015)  and many more applications. 
+#'Different methods have been employed to extract phenologic metrics, which include threshold definition (White et al., 1997), decomposition of the vegetation dynamic curve using harmonic analysis (Jakubauskas et al., 2001; Roerink et al., 2011) (Zhang et al., 2003) , taking the first derivative of the smoothed and non-smoothed vegetation index dynamics curves (Moulin et al., 1997) and defining the crossover point of the smoothed and non-smoothed dynamics curves (Hill and Donald, 2003; Reed et al., 1994). In this package the phenologic metrics were extracted based on correlation of the description of crop physiological stages (Zadoks etal. 1974) with the relative greenness of the crop on the vegetation dynamics. 
+#'The list of the phenologic metrics and their description are provided at the application Note for this package (Araya etal. 2016- to be published)
+#'
+#'@examples 
+#' # EXAMPLE - 1
+#'
+#' # phenologic metrics for region at the western Eyre Peninsula, South Australia. 
+#' # The Raster images are clipped to the AOI, AOI = FALSE
 
+#' PhenoMetrics(system.file("extdata/data1", package="CropPhenology"), FALSE)
+#' 
+#' 
+#' # EXAMPLE - 2
+#' # Phenologic metrics for region at the Eastern Eyre Peninsula, South Australia. 
+#' # Polygon boundary used as AOI from the MODIS images thus AOI= TRUE
+#' 
+#' PhenoMetrics(system.file("extdata/data2", package="CropPhenology"), TRUE)
+#' 
+#' # In both examples the result will be saved at the working directory under the folder "Results"
+#' 
+#' @references Araya, S., Lyle, G., Lewis, M., Ostendorf, B., in press. Phenologic metrics derived from MODIS NDVI as indicators for Plant Available Water-holding Capacity. Ecol. Ind.
+#' @references Brown, J.C., Kastens, J.H., Coutinho, A.C., Victoria, D.d.C., Bishop, C.R., 2013. Classifying multiyear agricultural land use data from Mato Grosso using time-series MODIS vegetation index data. Rem. Sens. of Env/ 130, 39-50.
+#' @references Hill, M.J., Donald, G.E., 2003. Estimating spatio-temporal patterns of agricultural productivity in fragmented landscapes using AVHRR NDVI time series. Rem.Sen. Env. 84, 367-384.
+#' @references Moulin, S., Kergoat, L., Viovy, N., Dedieu, G., 1997. Global-scale assessment of vegetation phenology using NOAA/AVHRR satellite measurements. Journal of Climate 10, 1154-1170.
+#' @references Reed, B.C., Schwartz, M.D., Xiao, X., 2009. Remote Sensing Phenology: Status and the Way Forward, in: Noormets, A. (Ed.), Phenology of Ecosystem Processes. Springer New York, pp. 231-246.
+#' @references Roerink, G.J., Danes, M.H.G.I., Prieto, O.G., De Wit, A.J.W., Van Vliet, A.J.H., 2011. Deriving plant phenology from remote sensing, 2011 6th Int. Wor. on the, pp. 261-264.
+#' @references Sakamoto, T., Gitelson, A.A., Arkebauer, T.J., 2013. MODIS-based corn grain yield estimation model incorporating crop phenology information. Rem. Sen.of Env. 131, 215-231.
+#' @references  White, M.A., Thornton, P.E., Running, S.W., 1997. A continental phenology model for monitoring vegetation responses to interannual climatic variability. Glo. Biogeochem. Cyc. 11, 217-234.
+#' @references Zadoks, J.C., Chang, T.T., Konzak, C.F., 1974. A decimal code for the growth stages of cereals. Weed Research 14, 415-421.
+
+
+#' 
+#' 
+#' 
 PhenoMetrics<- function (RawPath, BolAOI){
   
   # install.packages("shapefiles")
@@ -118,7 +151,8 @@ PhenoMetrics<- function (RawPath, BolAOI){
       AnnualTS[q]=GRD_CD
       q=q+1
     }
-    ts.plot(AnnualTS)
+    #ts.plot(AnnualTS)
+    
     #s=s+1
     #AnnualTS is the time series of all the pixels
     #======================================
@@ -504,7 +538,10 @@ PhenoMetrics<- function (RawPath, BolAOI){
 #' @keywords Two point curves
 #' @keywords time-series curves
 #' @author Sofanit Araya
-#' @examples TwoPointsPlot(154,125)
+#' 
+#' @examples TwoPointsPlot(114,125)
+#' # The function results two time series vegetation index curves together at the plot pannel
+#' 
 #' @seealso PhenoMetrics()
 #' 
 TwoPointsPlot<- function (Id1,Id2){
@@ -518,7 +555,7 @@ TwoPointsPlot<- function (Id1,Id2){
     stop()
   }
   while(z>0 & z<length(try)){
-    CVal=(try[[z]][,"value"][20])/10000
+    CVal=(try[[z]][,"value"][as.numeric(Id1)])/10000
     if (is.na(CVal)){
       if (z==1){ 
         CVal=0        
@@ -532,7 +569,7 @@ TwoPointsPlot<- function (Id1,Id2){
   }
   
   while(b>0 & b<length(try)){
-    CVal=(try[[b]][,"value"][21])/10000
+    CVal=(try[[b]][,"value"][as.numeric(Id2)])/10000
     if (is.na(CVal)){
       if (b==1){ 
         CVal=0        
@@ -545,6 +582,11 @@ TwoPointsPlot<- function (Id1,Id2){
     b=b+1
   }
   
-  ts.plot(ts(Curve1), ts(Curve2))
+  par(mfrow=c(1,1))
+  par(mar=c(3.5, 2.5, 2.5, 5.5))
+    
+  ts.plot(ts(Curve1), ts(Curve2),lwd=c(3,1) )
   
+  return ("The curves are here")
+
 }

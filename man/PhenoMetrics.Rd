@@ -35,16 +35,40 @@ AreaBeforeMax - the integral area under the curve between Onset and Maximum NDVI
 AreaAfterMax - the integral area under the curve between Maximum NDVI and Offser
 }
 \description{
-Extract major phenologic parameters from time series vegetaion index data. Total of 11 phenologic metrics as raster and Ascii files. The function takes path of the vegetation index data and the boolean Value for BolAOI (True- if there is AOI polygon, FALSE- if the parameters are calculated for the whole region).
+This function extracts major phenologic parameters from time series vegetaion index data. Total of 11 phenologic metrics as raster and Ascii files. The function takes path of the vegetation index data and the boolean Value for BolAOI (True- if there is AOI polygon, FALSE- if the parameters are calculated for the whole region).
+}
+\detail{
+Remote sensing derived vegetation phenology or land surface phenology refered to observation of seasonal pattern variation in vegetated land surface from remote sensing vegetation indices(Reed etal. 2009). Remotely sensed vegetation phenology
+has been used as an indicator for climate change (Kramer et al.,2000; White et al., 1997), to estimate agricultural productivity (Hill and Donald, 2003; Labus et al., 2002; Sakamoto et al., 2013) and regional management for crop type mapping (Brown et al., 2013;Niazmardi et al., 2013), Soil PAWC (Araya etal. 2015) and many more applications. 
+The PhenoMetrics function extracts the major crop phenologic parameters with closest corelation with the crop growth and development stages (zadok etal. 1974). The list of the metrics and thier descripetion is provided at the separate Appication Note (Araya etal. 2016)
+
 }
 \examples{
-PhenoMetrics("E:/MODIS/2005", TRUE)
+# The data - MODIS images of year 2008 for the small landscape at the Western Eyre Peninsula. 
+# With out AOI - run to the whole region
+PhenoMetrics(system.file("extdata", package="CropPhenology"), FALSE))
+#with AOI provided as a Polygon for the Buckleboo region at the easter Eyre Peninsula
+PhenoMetrics(system.file("extdata1", package="CropPhenology"), TRUE))
+
 }
 \author{
 Sofanit Araya
 }
 \references{
-Araya etal.(2015)
+References
+
+Araya, S., Lyle, G., Lewis, M., Ostendorf, B., in press. Phenologic metrics derived from MODIS NDVI as indicators for Plant Available Water-holding Capacity. Ecological Indicators.
+Araya, S., Ostendorf, B., Lyle, G., Lewis, M., 2013. Crop phenology based on MODIS satellite imagery as an indicator of plant available water content, International Congress on Modelling and Simulation (20th: 2013: Adelaide, South Australia).
+Brown, J.C., Kastens, J.H., Coutinho, A.C., Victoria, D.d.C., Bishop, C.R., 2013. Classifying multiyear agricultural land use data from Mato Grosso using time-series MODIS vegetation index data. Remote Sensing of Environment 130, 39-50.
+Hill, M.J., Donald, G.E., 2003. Estimating spatio-temporal patterns of agricultural productivity in fragmented landscapes using AVHRR NDVI time series. Remote Sensing of Environment 84, 367-384.
+Kramer, K., Leinonen, I., Loustau, D., 2000. The importance of phenology for the evaluation of impact of climate change on growth of boreal, temperate and Mediterranean forests ecosystems: an overview. International Journal of Biometeorology 44, 67-75.
+Labus, M., Nielsen, G., Lawrence, R., Engel, R., Long, D., 2002. Wheat yield estimates using multi-temporal NDVI satellite imagery. International Journal of Remote Sensing 23, 4169-4180.
+Niazmardi, S., Khanahmadlou, H., Shang, J., McNairn, H., Homayouni, S., 2013. A new classification method based on the support vector regression of NDVI time series for agricultural crop mapping, pp. 361-364.
+Reed, B.C., Schwartz, M.D., Xiao, X., 2009. Remote Sensing Phenology: Status and the Way Forward, in: Noormets, A. (Ed.), Phenology of Ecosystem Processes. Springer New York, pp. 231-246.
+Sakamoto, T., Gitelson, A.A., Arkebauer, T.J., 2013. MODIS-based corn grain yield estimation model incorporating crop phenology information. Remote Sensing of Environment 131, 215-231.
+White, M.A., Thornton, P.E., Running, S.W., 1997. A continental phenology model for monitoring vegetation responses to interannual climatic variability. Global Biogeochemical Cycles 11, 217-234.
+Zadoks, J.C., Chang, T.T., Konzak, C.F., 1974. A decimal code for the growth stages of cereals. Weed Research 14, 415-421.
+
 }
 \seealso{
 TwoPointsPlot (Id1, Id2)
@@ -54,4 +78,3 @@ TwoPointsPlot (Id1, Id2)
 \keyword{remote}
 \keyword{satellite}
 \keyword{sensing,}
-

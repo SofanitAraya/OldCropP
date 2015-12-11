@@ -539,7 +539,11 @@ PhenoMetrics<- function (RawPath, BolAOI){
 #' @keywords time-series curves
 #' @author Sofanit Araya
 #' 
+<<<<<<< HEAD
 #' @examples TwoPointsPlot(114,125)
+=======
+#' @examples TwoPointsPlot(154,125)
+>>>>>>> 5ba94b7a53e9fc63e179b58dbc6aeb06b9ff262e
 #' # The function results two time series vegetation index curves together at the plot pannel
 #' 
 #' @seealso PhenoMetrics()

@@ -487,13 +487,14 @@ PhenoMetrics<- function (RawPath, BolAOI){
   AT=rasterFromXYZ(Area_Total)
   plot(AT$value, main="Total area")
   writeRaster(AT$value, "Area_Total.img", overwrite=TRUE)
+  
   AA=rasterFromXYZ(Area_After)
   plot(AA$value, main="Area After Max")
   writeRaster(AA$value, "Area_After.img", overwrite=TRUE)
   
   AB=rasterFromXYZ(Area_Before)
   plot(AB$value, main="Area Before Max")
-  writeRaster(MT$value, "Area_Before.img", overwrite=TRUE)
+  writeRaster(AB$value, "Area_Before.img", overwrite=TRUE)
   
   OT=rasterFromXYZ(Onset_Time)
   plot(OT$value, main="Onset Time")
@@ -589,6 +590,6 @@ TwoPointsPlot<- function (Id1,Id2){
     
   ts.plot(ts(Curve1), ts(Curve2),lwd=c(3,1) )
   
-  return ("The curves are here")
+  return ("..........The curves are here............................")
 
 }

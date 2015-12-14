@@ -444,18 +444,18 @@ PhenoMetrics<- function (RawPath, BolAOI){
   setwd(paste(getwd(), "Results", sep="/"))
   
   
-  write.table(Area_Total, "Area_2003.txt")
-  write.table(Area_After, "Area_2003_After.txt")
-  write.table(Area_Before, "Area_2003_Before.txt")
+  write.table(Area_Total, "Area_Total.txt")
+  write.table(Area_After, "Area_After.txt")
+  write.table(Area_Before, "Area_Before.txt")
   
-  write.table(Max_Value, "Max_V_2003.txt")
-  write.table(Max_Time, "Max_T_2003.txt")
+  write.table(Max_Value, "Max_V.txt")
+  write.table(Max_Time, "Max_T.txt")
   
-  write.table(Offset_Value, "Offset_2003.txt")
-  write.table(Offset_Time, "Offset_T_2003.txt")
+  write.table(Offset_Value, "Offset_V.txt")
+  write.table(Offset_Time, "Offset_T.txt")
   
-  write.table(Onset_Value, "Onset_2003.txt")
-  write.table(Onset_Time, "Onset_T_2003.txt")
+  write.table(Onset_Value, "Onset_V.txt")
+  write.table(Onset_Time, "Onset_T.txt")
   ###===================================================================================================
   #Defining secondary metrics
   

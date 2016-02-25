@@ -2,7 +2,7 @@
 % Please edit documentation in R/CropPhenology.R
 \name{MultiPointsPlot}
 \alias{MultiPointsPlot}
-\title{Time series curves for two points}
+\title{Time series curves for Multiple points in the Region of Interest}
 \usage{
 MultiPointsPlot(N, Id1, Id2, Id3, Id4, Id5)
 }
@@ -10,18 +10,26 @@ MultiPointsPlot(N, Id1, Id2, Id3, Id4, Id5)
 \item{Id1}{-  ID number for point 1}
 
 \item{Id2}{-  Id number for point 2}
+
+\item{Id3}{-  ID number for point 1}
+
+\item{Id4}{-  ID number for point 1}
+
+\item{Id5}{-  ID number for point 1}
+
+\item{N-}{number of intersted points}
 }
 \value{
-Two time series curves together in a single plot (The first point represented as a soild line and the second point as a dotted line)
+Multiple time series curves together in a single plot
 }
 \description{
-TwoPointsPlot function takes the ID for the two pixels within the region of interst. The function returns, the timeseries curves ploted together. The Id numbers can be obtained from the ASCII file outputs.
+MultiPointsPlot function takes the ID for the pixels within the region of interst and returns, the timeseries curves from these points, ploted together. The Id numbers can be obtained from the txt file (All_Pixels.txt) outputs.
 }
 \examples{
 TwoPointsPlot(114,125)
 
 
-# The function results two time series vegetation index curves together at the plot pannel
+# The function results multiple time series vegetation index curves together at the plot pannel
 
 }
 \author{
@@ -30,8 +38,10 @@ Sofanit Araya
 \seealso{
 PhenoMetrics()
 }
-\keyword{Two}
+\keyword{Curve}
 \keyword{curves}
-\keyword{point}
+\keyword{from}
+\keyword{multiple}
+\keyword{points}
 \keyword{time-series}
 

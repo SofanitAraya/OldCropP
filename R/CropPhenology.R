@@ -594,8 +594,12 @@ PhenoMetrics<- function (RawPath, BolAOI){
 MultiPointsPlot<- function (N,Id1,Id2,Id3,Id4,Id5){
   AP=read.table("All_pixels.txt", header=TRUE)
   APP=as.matrix(AP[Id1,])
+  if ((Id1>length(APP)) || (Id2>length(APP)) || (Id3>length(APP)) || (Id4>length(APP)) || (Id5>length(APP)) ){
+    stop ('Id out of range')
+  }
   if (N>5){
     warning ('The maximum No of pixel to plot is 5')
+
     if (missing (Id1) | missing(Id2) | missing (Id3) | missing (Id4) | missing (Id5)){
       stop('Id missed')
     }

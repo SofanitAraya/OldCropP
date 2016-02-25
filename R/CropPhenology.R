@@ -597,6 +597,11 @@ MultiPointsPlot<- function (N,Id1,Id2,Id3,Id4,Id5){
   if ((Id1>length(APP)) || (Id2>length(APP)) || (Id3>length(APP)) || (Id4>length(APP)) || (Id5>length(APP)) ){
     stop ('Id out of range')
   }
+  
+  if ((is.numeric(Id1)==FALSE) || (is.numeric(Id2)==FALSE) || (is.numeric(Id3)==FALSE) || (is.numeric(Id4)==FALSE) || (is.numeric(Id5)==FALSE) ){
+    stop ('ID should be numeric')
+  }
+  
   if (N>5){
     warning ('The maximum No of pixel to plot is 5')
 

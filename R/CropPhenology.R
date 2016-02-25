@@ -155,10 +155,9 @@ PhenoMetrics<- function (RawPath, BolAOI){
     cordinate[1]=cor[s,1]
     cordinate[2]=cor[s,2]
     
-    dir.create("Result")
-    setwd(paste(getwd(), "Result", sep="/"))
+
     
-    write(append(s,append(cordinate,AnnualTS)), file="All.txt", append=TRUE, ncolumns=(length(AnnualTS)+3))
+    write(append(s,append(cordinate,AnnualTS)), file="All_Pixels.txt", append=TRUE, ncolumns=(length(AnnualTS)+3))
     ts.plot(AnnualTS)
     #s=s+1
     #AnnualTS is the time series of all the pixels
@@ -460,8 +459,8 @@ PhenoMetrics<- function (RawPath, BolAOI){
     
   }
   
-#  dir.create("Result4")
-#  setwd(paste(getwd(), "Result4", sep="/"))
+  dir.create("Metrics")
+  setwd(paste(getwd(), "Metrics", sep="/"))
   
   
   write.table(Area_Total, "Area_2003.txt")

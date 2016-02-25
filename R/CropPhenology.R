@@ -599,36 +599,36 @@ MultiPointsPlot<- function (N,Id1,Id2,Id3,Id4,Id5){
     if (missing (Id1) | missing(Id2) | missing (Id3) | missing (Id4) | missing (Id5)){
       stop('Id missed')
     }
-    return (ts.plot(ts(as.matrix(AP[ID1,])[4:length(APP)])), (ts.plot(ts(as.matrix(AP[ID2,])[4:length(APP)]))), (ts.plot(ts(as.matrix(AP[ID3,])[4:length(APP)]))), (ts.plot(ts(as.matrix(AP[ID4,])[4:length(APP)]))), (ts.plot(ts(as.matrix(AP[ID5,])[4:length(APP)]))), col=1:5)
+    return (ts.plot(ts(as.matrix(AP[Id1,])[4:length(APP)])), (ts.plot(ts(as.matrix(AP[Id2,])[4:length(APP)]))), (ts.plot(ts(as.matrix(AP[Id3,])[4:length(APP)]))), (ts.plot(ts(as.matrix(AP[Id4,])[4:length(APP)]))), (ts.plot(ts(as.matrix(AP[Id5,])[4:length(APP)]))), col=1:5)
   }
   if (N==1){
     warning('only one pixel to be ploted')
     AP
-   ts.plot ((ts(as.matrix(AP[ID1,])[4:length(APP)])))
+   ts.plot ((ts(as.matrix(AP[Id1,])[4:length(APP)])))
   }
   if (N==2){
     if (missing (Id1) || missing(Id2)){
       stop('Id missed')
     }
-    ts.plot ((ts(as.matrix(AP[ID1,])[4:length(APP)])), (ts(as.matrix(AP[ID2,])[4:length(APP)])), col=1:2)
+    ts.plot ((ts(as.matrix(AP[Id1,])[4:length(APP)])), (ts(as.matrix(AP[Id2,])[4:length(APP)])), col=1:2)
   }
   if (N==3){
     if ((missing (Id1)) || (missing(Id2)) || (missing (Id3))){
       stop ("Id missed")
     }
-    ts.plot ((ts(as.matrix(AP[ID1,])[4:length(APP)])), (ts(as.matrix(AP[ID2,])[4:length(APP)])), (ts(as.matrix(AP[ID3,])[4:length(APP)])), col=1:3)
+    ts.plot ((ts(as.matrix(AP[Id1,])[4:length(APP)])), (ts(as.matrix(AP[Id2,])[4:length(APP)])), (ts(as.matrix(AP[Id3,])[4:length(APP)])), col=1:3)
   }
   if (N==4){
     if (missing (Id1) || missing(Id2) || missing (Id3) || missing (Id4)){
       stop('Id missed')
     }
-    ts.plot ((ts(as.matrix(AP[ID1,])[4:length(APP)])), (ts(as.matrix(AP[ID2,])[4:length(APP)])), (ts(as.matrix(AP[ID3,])[4:length(APP)])), (ts(as.matrix(AP[ID4,])[4:length(APP)])), col=1:4)
+    ts.plot ((ts(as.matrix(AP[Id1,])[4:length(APP)])), (ts(as.matrix(AP[Id2,])[4:length(APP)])), (ts(as.matrix(AP[Id3,])[4:length(APP)])), (ts(as.matrix(AP[Id4,])[4:length(APP)])), col=1:4)
   }
   if (N==5){
     if (missing (Id1) || missing(Id2) || missing (Id3) || missing (Id4) || missing (Id5)){
       stop('Id missed')
     }
-    ts.plot ((ts(as.matrix(AP[ID1,])[4:length(APP)])), (ts(as.matrix(AP[ID2,])[4:length(APP)])), (ts(as.matrix(AP[ID3,])[4:length(APP)])), (ts(as.matrix(AP[ID4,])[4:length(APP)])), (ts(as.matrix(AP[ID5,])[4:length(APP)])), col=1:5)
+    ts.plot ((ts(as.matrix(AP[Id1,])[4:length(APP)])), (ts(as.matrix(AP[Id2,])[4:length(APP)])), (ts(as.matrix(AP[Id3,])[4:length(APP)])), (ts(as.matrix(AP[Id4,])[4:length(APP)])), (ts(as.matrix(AP[Id5,])[4:length(APP)])), col=1:5)
   }
     
   return ("..........The curves are here............................")

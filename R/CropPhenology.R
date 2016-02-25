@@ -370,7 +370,7 @@ PhenoMetrics<- function (RawPath, BolAOI){
     #+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     #                                                  Offset
     #+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-    
+    crp=TRUE
     
     j=Max_T #J is the lower bound on down AnnualTS / upeer bound in sequence
     while (j<FileLen){

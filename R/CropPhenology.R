@@ -64,18 +64,20 @@ PhenoMetrics<- function (RawPath, BolAOI){
   #install.packages("maptools")
   #install.packages("gdal")
   require('shapefiles')
-  library("shapefiles")
+  #library("shapefiles")
   require("raster")
-  library("raster")
+  #library("raster")
   require("maptools")
-  library("maptools")
+  #library("maptools")
   require("rgdal")
-  library("rgdal")
-  
+  #library("rgdal")
+  require("xlsx")
   
   setwd(RawPath)
   raDir=dir(path=RawPath, pattern="*.img$")
+  shDir=dir(pattern="*.dbf$")
   FileLen=length(raDir)
+  filelen=length(raDir)
   
   #f=system.file(raDir[1], package="raster")
   
@@ -97,21 +99,14 @@ PhenoMetrics<- function (RawPath, BolAOI){
   #AnnualTS=as.matrix(Onset)
   # s is pixel number
   # r is the number of values for each pixels - 20 for year 2000 and 23 for the other years 
+  AOI=dir(pattern="*.shp$")
+  shp=readShapePoly(AOI)
   
-  if (BolAOI == TRUE){
-    BolAOI=dir(pattern="*.shp$")
-    shp=readShapePoly(BolAOI)
-  }
-  
-  if (BolAOI == FALSE){
-    ra=raster(raDir[1])    
-    Points=rasterToPoints(ra)
-    shp=rasterToPolygons((ra*0), dissolve=TRUE)
-  }
   
   i=1
   try=0
-  while (i<(FileLen+1)) {
+  
+  while (i<(filelen+1)) {
     ras=raster(raDir[i])
     try[i]=extract (ras,shp, cellnumbers=TRUE)
     i=i+1
@@ -121,6 +116,7 @@ PhenoMetrics<- function (RawPath, BolAOI){
   
   cor=xyFromCell(ras,try[[1]][,"cell"])
   com=cbind(cor,try[[1]])
+  
   Onset_Value=com
   Onset_Time=com
   Offset_Value=com
@@ -130,11 +126,12 @@ PhenoMetrics<- function (RawPath, BolAOI){
   Area_Total=com
   Area_Before=com
   Area_After=com
-  
+  Asymmetry=com
   
   r=length(try[[1]][,"value"])
   
-  
+  Head="ID X-Cord Y_Cord T1 T2 T3 T4 T5 T6 T7 T8 T9 T10 T11 T12 T13 T14 T15 T16 T17 T18 T19 T20 T21 T22 T23"
+  #write.xlsx(Head, file="All_Pixels.xls", append=TRUE, ncolumns=length(Head), sep=" ")
   
   while(s>0 & s<(r+1)){ #iterate through the each pixel
     
@@ -146,13 +143,23 @@ PhenoMetrics<- function (RawPath, BolAOI){
     q=1 #reset qon for the next pixel comparision
     #===================== Iterate throught the files for s-th pixels to get the curve
     
-    while (q>0 & q<FileLen+1){
+    while (q>0 & q<filelen+1){
       GRD_CD=(try[[q]][,"value"][s])/10000
+      if (is.na(GRD_CD)){
+        GRD_CD=(try[[q-1]][,"value"][s])/10000
+      }
       AnnualTS[q]=GRD_CD
       q=q+1
     }
-    #ts.plot(AnnualTS)
+    cordinate=0
+    cordinate[1]=cor[s,1]
+    cordinate[2]=cor[s,2]
     
+    dir.create("Result")
+    setwd(paste(getwd(), "Result", sep="/"))
+    
+    write(append(s,append(cordinate,AnnualTS)), file="All.txt", append=TRUE, ncolumns=(length(AnnualTS)+3))
+    ts.plot(AnnualTS)
     #s=s+1
     #AnnualTS is the time series of all the pixels
     #======================================
@@ -382,6 +389,11 @@ PhenoMetrics<- function (RawPath, BolAOI){
     print (offset)
     print(trsh2)
     
+    if ((max-trsh2)<0.05) {
+      crp=FALSE
+      offset=0
+    }
+    
     Offset_Value[,"value"][s]=trsh2
     Offset_Time[,"value"][s]= offset
     
@@ -403,6 +415,11 @@ PhenoMetrics<- function (RawPath, BolAOI){
       start2=9
     }
     
+    if (crp==FALSE){
+      Area=0
+      Area1=0
+      Area2=0
+    }
     while (start<end){
       Area=Area+AnnualTS[start]
       start=start+1
@@ -436,26 +453,31 @@ PhenoMetrics<- function (RawPath, BolAOI){
     if (Area==0){ Area2=0}
     Area_After[,"value"][s]=Area2
     
+    Asy=Area1-Area2
+    Asymmetry[,"value"][s]=Asy
     
     s=s+1
+    
   }
   
-  dir.create("Results")
-  setwd(paste(getwd(), "Results", sep="/"))
+#  dir.create("Result4")
+#  setwd(paste(getwd(), "Result4", sep="/"))
   
   
-  write.table(Area_Total, "Area_Total.txt")
-  write.table(Area_After, "Area_After.txt")
-  write.table(Area_Before, "Area_Before.txt")
+  write.table(Area_Total, "Area_2003.txt")
+  write.table(Area_After, "Area_2003_After.txt")
+  write.table(Area_Before, "Area_2003_Before.txt")
   
-  write.table(Max_Value, "Max_V.txt")
-  write.table(Max_Time, "Max_T.txt")
+  write.table(Max_Value, "Max_V_2003.txt")
+  write.table(Max_Time, "Max_T_2003.txt")
   
-  write.table(Offset_Value, "Offset_V.txt")
-  write.table(Offset_Time, "Offset_T.txt")
+  write.table(Offset_Value, "Offset_2003.txt")
+  write.table(Offset_Time, "Offset_T_2003.txt")
   
-  write.table(Onset_Value, "Onset_V.txt")
-  write.table(Onset_Time, "Onset_T.txt")
+  write.table(Onset_Value, "Onset_2003.txt")
+  write.table(Onset_Time, "Onset_T_2003.txt")
+  
+  write.table(Asymmetry, "Asymmetry.txt")
   ###===================================================================================================
   #Defining secondary metrics
   
@@ -474,121 +496,141 @@ PhenoMetrics<- function (RawPath, BolAOI){
   
   
   ###===================================================================================================
-  par(mfrow=c(4,3))
+  par(mfrow=c(2,2))
   
   MT=rasterFromXYZ(Max_Time)
+  crs(MT)<-crs(ras)
   plot(MT$value, main="Max Time")
   writeRaster(MT$value, "Max_T.img", overwrite=TRUE)
   
   MV=rasterFromXYZ(Max_Value)
+  crs(MV)<-crs(ras)
   plot(MV$value, main="Max_NDVI")
   writeRaster(MV$value, "Max_V.img", overwrite=TRUE)
   
   AT=rasterFromXYZ(Area_Total)
+  crs(AT)<-crs(ras)
   plot(AT$value, main="Total area")
   writeRaster(AT$value, "Area_Total.img", overwrite=TRUE)
   
   AA=rasterFromXYZ(Area_After)
+  crs(AA)<-crs(ras)
   plot(AA$value, main="Area After Max")
   writeRaster(AA$value, "Area_After.img", overwrite=TRUE)
   
   AB=rasterFromXYZ(Area_Before)
+  crs(AB)<-crs(ras)
   plot(AB$value, main="Area Before Max")
   writeRaster(AB$value, "Area_Before.img", overwrite=TRUE)
   
   OT=rasterFromXYZ(Onset_Time)
+  crs(OT)<-crs(ras)
   plot(OT$value, main="Onset Time")
   writeRaster(OT$value, "Onset_T.img", overwrite=TRUE)
   
   OV=rasterFromXYZ(Onset_Value)
+  crs(OV)<-crs(ras)
   plot(OV$value, main="Onset_NDVI")
   writeRaster(OV$value, "Onset_V.img", overwrite=TRUE)
   
   OFT=rasterFromXYZ(Offset_Time)
+  crs(OFT)<-crs(ras)
   plot(OFT$value, main="Offset Time")
   writeRaster(OFT$value, "Offset_T.img", overwrite=TRUE)
   
   OFV=rasterFromXYZ(Offset_Value)
+  crs(OFV)<-crs(ras)
   plot(OFV$value, main="Offset_NDVI")
   writeRaster(OFV$value, "Offset_V.img", overwrite=TRUE)
   
   GUS=rasterFromXYZ(GreenUpSlope)
+  crs(GUS)<-crs(ras)
   plot(GUS$value, main="GreenUpSlope")
   writeRaster(GUS$value, "GreenUpSlope.img", overwrite=TRUE)
   
   BDS=rasterFromXYZ(BrownDownSlope)
+  crs(BDS)<-crs(ras)
   plot(BDS$value, main="BrownDownSlope")
   writeRaster(BDS$value, "BrownDownSlope.img", overwrite=TRUE)
   
   Len=rasterFromXYZ(LengthGS)
-  plot(Len$value, main="GS Length")
+  crs(Len)<-crs(ras)
   writeRaster(Len$value, "LengthGS.img", overwrite=TRUE)
+  plot(Len$value, main="GS Length")
   
+  As=rasterFromXYZ(Asymmetry)
+  crs(As)<-crs(ras)
+  plot(As$value, main="Asymmetry")
+  writeRaster(As$value, "Asymmetry.img", overwrite=TRUE)
   
+  print(proc.time ()-ptm) 
+  
+  ##########################====================================##########################
   
   return("***********************Output file saved at working directory*******************************")
   
   ##########################====================================##########################
 }  
 #' @export
-#' @return Two time series curves together in a single plot (The first point represented as a soild line and the second point as a dotted line)
+#' @return Multiple time series curves together in a single plot
+#' @param N- number of intersted points
 #' @param Id1 -  ID number for point 1
 #' @param Id2 -  Id number for point 2
-#' @title Time series curves for two points
-#' @description TwoPointsPlot function takes the ID for the two pixels within the region of interst. The function returns, the timeseries curves ploted together. The Id numbers can be obtained from the ASCII file outputs.
-#' @keywords Two point curves
+#' @param Id3 -  ID number for point 1
+#' @param Id4 -  ID number for point 1
+#' @param Id5 -  ID number for point 1
+#' @title Time series curves for Multiple points in the Region of Interest
+#' @description MultiPointsPlot function takes the ID for the pixels within the region of interst and returns, the timeseries curves from these points, ploted together. The Id numbers can be obtained from the txt file (All_Pixels.txt) outputs.
+#' @keywords Curve from multiple points 
 #' @keywords time-series curves
 #' @author Sofanit Araya
 #' 
 #' @examples TwoPointsPlot(114,125)
 #' 
 #' 
-#' # The function results two time series vegetation index curves together at the plot pannel
+#' # The function results multiple time series vegetation index curves together at the plot pannel
 #' 
 #' @seealso PhenoMetrics()
 #' 
-TwoPointsPlot<- function (Id1,Id2){
-  
-  z=1
-  b=1
-  Curve1=as.matrix(0)
-  Curve2=as.matrix(0)
-  if (exists('try')==FALSE){
-    print ("Run CropPheno before TwoPointPlot")
-    stop()
-  }
-  while(z>0 & z<length(try)){
-    CVal=(try[[z]][,"value"][as.numeric(Id1)])/10000
-    if (is.na(CVal)){
-      if (z==1){ 
-        CVal=0        
-      }
-      else {
-        CVal=Cval[z-1]
-      }      
+MultiPointsPlot<- function (N,Id1,Id2,Id3,Id4,Id5){
+  AP=read.table("All_pixels.txt", header=TRUE)
+  APP=as.matrix(AP[Id1,])
+  if (N>5){
+    warning ('The maximum No of pixel to plot is 5')
+    if (missing (Id1) | missing(Id2) | missing (Id3) | missing (Id4) | missing (Id5)){
+      stop('Id missed')
     }
-    Curve1[z]=CVal
-    z=z+1
+    return (ts.plot(ts(as.matrix(AP[ID1,])[4:length(APP)])), (ts.plot(ts(as.matrix(AP[ID2,])[4:length(APP)]))), (ts.plot(ts(as.matrix(AP[ID3,])[4:length(APP)]))), (ts.plot(ts(as.matrix(AP[ID4,])[4:length(APP)]))), (ts.plot(ts(as.matrix(AP[ID5,])[4:length(APP)]))), col=1:5)
   }
-  
-  while(b>0 & b<length(try)){
-    CVal=(try[[b]][,"value"][as.numeric(Id2)])/10000
-    if (is.na(CVal)){
-      if (b==1){ 
-        CVal=0        
-      }
-      else {
-        CVal=Cval[b-1]
-      }      
+  if (N==1){
+    warning('only one pixel to be ploted')
+    AP
+    return (ts.plot(ts(as.matrix(AP[ID1,])[4:length(APP)])))
+  }
+  if (N==2){
+    if (missing (Id1) || missing(Id2)){
+      stop('Id missed')
     }
-    Curve2[b]=CVal
-    b=b+1
+    return (ts.plot(ts(as.matrix(AP[ID1,])[4:length(APP)])), (ts(as.matrix(AP[ID2,])[4:length(APP)])), col=1:2)
   }
-  
-  par(mfrow=c(1,1))
-  par(mar=c(3.5, 2.5, 2.5, 5.5))
-    
-  ts.plot(ts(Curve1), ts(Curve2),lwd=c(3,1) )
+  if (N==3){
+    if ((missing (Id1)) || (missing(Id2)) || (missing (Id3))){
+      stop ("Id missed")
+    }
+    return (ts.plot(ts(as.matrix(AP[ID1,])[4:length(APP)])), (ts(as.matrix(AP[ID2,])[4:length(APP)])), (ts(as.matrix(AP[ID3,])[4:length(APP)])), col=1:3)
+  }
+  if (N==4){
+    if (missing (Id1) || missing(Id2) || missing (Id3) || missing (Id4)){
+      stop('Id missed')
+    }
+    return (ts.plot(ts(as.matrix(AP[ID1,])[4:length(APP)])), (ts(as.matrix(AP[ID2,])[4:length(APP)])), (ts(as.matrix(AP[ID3,])[4:length(APP)])), (ts(as.matrix(AP[ID4,])[4:length(APP)])), col=1:4)
+  }
+  if (N==5){
+    if (missing (Id1) || missing(Id2) || missing (Id3) || missing (Id4) || missing (Id5)){
+      stop('Id missed')
+    }
+    return (ts.plot(ts(as.matrix(AP[ID1,])[4:length(APP)])), (ts(as.matrix(AP[ID2,])[4:length(APP)])), (ts(as.matrix(AP[ID3,])[4:length(APP)])), (ts(as.matrix(AP[ID4,])[4:length(APP)])), (ts(as.matrix(AP[ID5,])[4:length(APP)])), col=1:5)
+  }
   
   return ("..........The curves are here............................")
 

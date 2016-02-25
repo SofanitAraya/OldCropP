@@ -562,8 +562,7 @@ PhenoMetrics<- function (RawPath, BolAOI){
   plot(As$value, main="Asymmetry")
   writeRaster(As$value, "Asymmetry.img", overwrite=TRUE)
   
-  print(proc.time ()-ptm) 
-  
+    
   ##########################====================================##########################
   
   return("***********************Output file saved at working directory*******************************")

@@ -566,7 +566,7 @@ PhenoMetrics<- function (RawPath, BolAOI){
     
   ##########################====================================##########################
   
-  return("***********************Output file saved at working directory*******************************")
+  return("*********************Output file saved at working directory*************************")
   
   ##########################====================================##########################
 }  
@@ -695,6 +695,6 @@ MultiPointsPlot<- function (N,Id1,Id2,Id3,Id4,Id5){
     ts.plot ((ts(as.matrix(AP[Id1,])[4:length(APP)])), (ts(as.matrix(AP[Id2,])[4:length(APP)])), (ts(as.matrix(AP[Id3,])[4:length(APP)])), (ts(as.matrix(AP[Id4,])[4:length(APP)])), (ts(as.matrix(AP[Id5,])[4:length(APP)])), col=1:5)
   }
     
-  return ("..........The curves are here............................")
+  return ("..........Curves ploted............................")
 
 }

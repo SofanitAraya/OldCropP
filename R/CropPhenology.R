@@ -99,9 +99,19 @@ PhenoMetrics<- function (RawPath, BolAOI){
   #AnnualTS=as.matrix(Onset)
   # s is pixel number
   # r is the number of values for each pixels - 20 for year 2000 and 23 for the other years 
-  AOI=dir(pattern="*.shp$")
-  shp=readShapePoly(AOI)
+#  AOI=dir(pattern="*.shp$")
+#  shp=readShapePoly(AOI)
+  if (BolAOI == TRUE){
+    BolAOI=dir(pattern="*.shp$")
+    shp=readShapePoly(BolAOI)
+  }
   
+  if (BolAOI == FALSE){
+    ra=raster(raDir[1])    
+    Points=rasterToPoints(ra)
+    shp=rasterToPolygons((ra*0), dissolve=TRUE)
+  }
+ 
   
   i=1
   try=0

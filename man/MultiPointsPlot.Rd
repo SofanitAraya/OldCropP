@@ -11,11 +11,11 @@ MultiPointsPlot(N, Id1, Id2, Id3, Id4, Id5)
 
 \item{Id2}{-  Id number for point 2}
 
-\item{Id3}{-  ID number for point 1}
+\item{Id3}{-  ID number for point 3}
 
-\item{Id4}{-  ID number for point 1}
+\item{Id4}{-  ID number for point 4}
 
-\item{Id5}{-  ID number for point 1}
+\item{Id5}{-  ID number for point 5}
 
 \item{N-}{number of intersted points}
 }
@@ -26,7 +26,7 @@ Multiple time series curves together in a single plot
 MultiPointsPlot function takes the ID for the pixels within the region of interst and returns, the timeseries curves from these points, ploted together. The Id numbers can be obtained from the txt file (All_Pixels.txt) outputs.
 }
 \examples{
-TwoPointsPlot(114,125)
+MultiPointsPlot(3,11,114,125)
 
 
 # The function results multiple time series vegetation index curves together at the plot pannel

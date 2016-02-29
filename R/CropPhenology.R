@@ -50,7 +50,7 @@
 #' @references Reed, B.C., Schwartz, M.D., Xiao, X., 2009. Remote Sensing Phenology: Status and the Way Forward, in: Noormets, A. (Ed.), Phenology of Ecosystem Processes. Springer New York, pp. 231-246.
 #' @references Roerink, G.J., Danes, M.H.G.I., Prieto, O.G., De Wit, A.J.W., Van Vliet, A.J.H., 2011. Deriving plant phenology from remote sensing, 2011 6th Int. Wor. on the, pp. 261-264.
 #' @references Sakamoto, T., Gitelson, A.A., Arkebauer, T.J., 2013. MODIS-based corn grain yield estimation model incorporating crop phenology information. Rem. Sen.of Env. 131, 215-231.
-#' @references  White, M.A., Thornton, P.E., Running, S.W., 1997. A continental phenology model for monitoring vegetation responses to interannual climatic variability. Glo. Biogeochem. Cyc. 11, 217-234.
+#' @references White, M.A., Thornton, P.E., Running, S.W., 1997. A continental phenology model for monitoring vegetation responses to interannual climatic variability. Glo. Biogeochem. Cyc. 11, 217-234.
 #' @references Zadoks, J.C., Chang, T.T., Konzak, C.F., 1974. A decimal code for the growth stages of cereals. Weed Research 14, 415-421.
 
 
@@ -585,16 +585,16 @@ PhenoMetrics<- function (RawPath, BolAOI){
 #' @param N- number of intersted points
 #' @param Id1 -  ID number for point 1
 #' @param Id2 -  Id number for point 2
-#' @param Id3 -  ID number for point 1
-#' @param Id4 -  ID number for point 1
-#' @param Id5 -  ID number for point 1
+#' @param Id3 -  ID number for point 3
+#' @param Id4 -  ID number for point 4
+#' @param Id5 -  ID number for point 5
 #' @title Time series curves for Multiple points in the Region of Interest
 #' @description MultiPointsPlot function takes the ID for the pixels within the region of interst and returns, the timeseries curves from these points, ploted together. The Id numbers can be obtained from the txt file (All_Pixels.txt) outputs.
 #' @keywords Curve from multiple points 
 #' @keywords time-series curves
 #' @author Sofanit Araya
 #' 
-#' @examples TwoPointsPlot(114,125)
+#' @examples MultiPointsPlot(3,11,114,125)
 #' 
 #' 
 #' # The function results multiple time series vegetation index curves together at the plot pannel

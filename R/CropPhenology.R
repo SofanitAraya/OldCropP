@@ -26,6 +26,8 @@
 #'Different methods have been employed to extract phenologic metrics, which include threshold definition (White et al., 1997), decomposition of the vegetation dynamic curve using harmonic analysis (Jakubauskas et al., 2001; Roerink et al., 2011) (Zhang et al., 2003) , taking the first derivative of the smoothed and non-smoothed vegetation index dynamics curves (Moulin et al., 1997) and defining the crossover point of the smoothed and non-smoothed dynamics curves (Hill and Donald, 2003; Reed et al., 1994). In this package the phenologic metrics were extracted based on correlation of the description of crop physiological stages (Zadoks etal. 1974) with the relative greenness of the crop on the vegetation dynamics. 
 #'The list of the phenologic metrics and their description are provided at the application Note for this package (Araya etal. 2016- to be published)
 #'
+#'Please check the website www.cropphenology.wix.com/package
+#'
 #'@examples 
 #' # EXAMPLE - 1
 #'

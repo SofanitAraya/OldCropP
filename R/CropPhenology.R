@@ -78,8 +78,9 @@ PhenoMetrics<- function (RawPath, BolAOI){
   require("xlsx")
   
   setwd(RawPath)
-  raDir=dir(path=RawPath, pattern="*.img$")
-  shDir=dir(pattern="*.dbf$")
+  raDir=dir(path=RawPath)
+  #, pattern=c("*.img$", "*.rrd")
+#  shDir=dir(pattern="*.dbf$")
   FileLen=length(raDir)
   filelen=length(raDir)
   

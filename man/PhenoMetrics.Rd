@@ -33,6 +33,10 @@ LengthGS- the length of the growing season between Onset and Offset
 AreaBeforeMax - the integral area under the curve between Onset and Maximum NDVI
 
 AreaAfterMax - the integral area under the curve between Maximum NDVI and Offser
+
+TINDVI - the integral area under the curve
+
+Asymmetry - the difference between AreaBeforeMax and AreaAfterMax
 }
 \description{
 This function extracts major phenologic parameters from time series vegetaion index data. Total of 11 phenologic metrics as raster and Ascii files. The function takes path of the vegetation index data and the boolean Value for BolAOI (True- if there is AOI polygon, FALSE- if the parameters are calculated for the whole region).
@@ -41,9 +45,7 @@ This function extracts major phenologic parameters from time series vegetaion in
 Remote sensing phenology also called Land Surface Phenology refers to observation of seasonal pattern of vegetation changes using remote sensing vegetation indices (Reed etal. 2009).
 Remotely sensed vegetation phenology has been used for many ecological studies including as an indicator for climate change (Kramer et al.,2000; White et al., 1997), to estimate agricultural productivity (Hill and Donald, 2003; Labus et al., 2002; Sakamoto et al., 2013), regional management for crop type mapping (Brown et al., 2013; Niazmardi et al., 2013), as an indicator of soil Plant Available Water Holding Capacity (PAWC) variability across a farm (Araya etal. 2015)  and many more applications. 
 Different methods have been employed to extract phenologic metrics, which include threshold definition (White et al., 1997), decomposition of the vegetation dynamic curve using harmonic analysis (Jakubauskas et al., 2001; Roerink et al., 2011) (Zhang et al., 2003) , taking the first derivative of the smoothed and non-smoothed vegetation index dynamics curves (Moulin et al., 1997) and defining the crossover point of the smoothed and non-smoothed dynamics curves (Hill and Donald, 2003; Reed et al., 1994). In this package the phenologic metrics were extracted based on correlation of the description of crop physiological stages (Zadoks etal. 1974) with the relative greenness of the crop on the vegetation dynamics. 
-The list of the phenologic metrics and their description are provided at the application Note for this package (Araya etal. 2016- to be published)
-
-Please check the website www.cropphenology.wix.com/package
+The list of the phenologic metrics and their description are provided at the website - www.cropphenology.wix.com/package
 }
 \examples{
 # EXAMPLE - 1
@@ -85,7 +87,7 @@ White, M.A., Thornton, P.E., Running, S.W., 1997. A continental phenology model 
 Zadoks, J.C., Chang, T.T., Konzak, C.F., 1974. A decimal code for the growth stages of cereals. Weed Research 14, 415-421.
 }
 \seealso{
-TwoPointsPlot (Id1, Id2)
+MultiPointsPlot (N,Id1, Id2...Idn)
 }
 \keyword{Phenology,}
 \keyword{image}

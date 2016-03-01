@@ -42,6 +42,8 @@ Remote sensing phenology also called Land Surface Phenology refers to observatio
 Remotely sensed vegetation phenology has been used for many ecological studies including as an indicator for climate change (Kramer et al.,2000; White et al., 1997), to estimate agricultural productivity (Hill and Donald, 2003; Labus et al., 2002; Sakamoto et al., 2013), regional management for crop type mapping (Brown et al., 2013; Niazmardi et al., 2013), as an indicator of soil Plant Available Water Holding Capacity (PAWC) variability across a farm (Araya etal. 2015)  and many more applications. 
 Different methods have been employed to extract phenologic metrics, which include threshold definition (White et al., 1997), decomposition of the vegetation dynamic curve using harmonic analysis (Jakubauskas et al., 2001; Roerink et al., 2011) (Zhang et al., 2003) , taking the first derivative of the smoothed and non-smoothed vegetation index dynamics curves (Moulin et al., 1997) and defining the crossover point of the smoothed and non-smoothed dynamics curves (Hill and Donald, 2003; Reed et al., 1994). In this package the phenologic metrics were extracted based on correlation of the description of crop physiological stages (Zadoks etal. 1974) with the relative greenness of the crop on the vegetation dynamics. 
 The list of the phenologic metrics and their description are provided at the application Note for this package (Araya etal. 2016- to be published)
+
+Please check the website www.cropphenology.wix.com/package
 }
 \examples{
 # EXAMPLE - 1

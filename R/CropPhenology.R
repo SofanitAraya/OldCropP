@@ -355,6 +355,10 @@ PhenoMetrics<- function (RawPath, BolAOI){
       onset=Em
       onsetV=AnnualTS[Em]
     }
+    
+    print Em
+    print trsh1
+    
     if (Em>t){
       onset=Em
     }

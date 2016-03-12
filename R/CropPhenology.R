@@ -195,6 +195,13 @@ PhenoMetrics<- function (RawPath, BolAOI){
     
     # successive slops b/n  points
     
+    #+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    #                                                  Onset 
+    #+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    
+    # successive slops b/n  points
+    AnnualTS=px2_2001
+    
     j=7
     slop=(AnnualTS[j+1]-AnnualTS[j])
     slop=as.matrix(slop)
@@ -229,6 +236,8 @@ PhenoMetrics<- function (RawPath, BolAOI){
       i=i-1
       last=slop[i]
     }
+    
+    print (ls)
     #------------------------------------------------------------------------------------------------------------------------------
     #maximum of the post negetive records
     R_max=0
@@ -268,31 +277,21 @@ PhenoMetrics<- function (RawPath, BolAOI){
     }
     
     if (ls==5){
-      if ((AnnualTS[12]-AnnualTS[11])< 0){
-        Em=12
+      if ((slop[ls-1]<0) & ((AnnualTS[13]-AnnualTS[12])>0)){
+        Em=ls+7
       }
-      if (AnnualTS[12]-AnnualTS[11]>0){
-        if (slop[ls-1]<0){
-          Em=ls+7
-        }
-        if (slop[ls-1]>0){
-          k=7
-          while (k<12){
-            if (AnnualTS[k]>trsh1){
-              g=k-6
-              if (slop[k-6]>(-0.01)){
-                Em=k
-                break
-              }
-            }
-            k=k+1
+      if (slop[ls-1]>0){
+        k=7
+        while (k<12){
+          if (AnnualTS[k]>trsh1){
+            Em=k
+            break
           }
-        }      
+          k=k+1
+        }
       }
-      if (Em==0){
-        Em=12
-      } 
     }
+    
     
     if ((ls<5)& (ls>2)){
       
@@ -304,7 +303,6 @@ PhenoMetrics<- function (RawPath, BolAOI){
         k=7
         while (k<12){
           if (AnnualTS[k]>trsh1){ # check pt where the trushold passed
-            g=k-6
             if (slop[k-6]>=0){
               Em=k
               touched=TRUE
@@ -324,13 +322,13 @@ PhenoMetrics<- function (RawPath, BolAOI){
         }
       }
     }
-    if((ls==1) | (ls==2)){
+    if((ls==1) | (ls==2)){ #if the -ve slope is at the start
       k=ls+7
       tk=1
       while (k<12){
-        if (AnnualTS[k]>trsh1){
+        if (AnnualTS[k]>trsh1){ # check the point where trsh passed
           g=k-6
-          if (slop[k-6]>(-0.01)){
+          if (slop[k-6]>(-0.01)){ # check if the next slope is negetive- if posetive take that as onset if not keep checking
             Em=k
             tk=tk+1
             break
@@ -338,45 +336,49 @@ PhenoMetrics<- function (RawPath, BolAOI){
         }
         k=k+1
       }
-      if (tk==1){ Em=12 }
-    } 
-    #------------------------------------------------------------------------------------------------------------------------------
-    t=((AnnualTS[Em]-trsh1)/(AnnualTS[Em]-AnnualTS[Em-1]))
-    if (t==0){
-      Onset=Em  
-    }
-    
-    if (((t>0) & (AnnualTS[Em]-AnnualTS[Em-1])>0 &(Em>t))){
-      onset=Em-t
-      onsetV= ((AnnualTS[Em]-AnnualTS[Em-1])*(1-t))+AnnualTS[Em-1]
-    }
-    
-    if ((t<0) | (AnnualTS[Em]-AnnualTS[Em-1])<0){
-      onset=Em
-      onsetV=AnnualTS[Em]
+      if (tk==1){ Em=12 } # if the slops gets all -ve after ls -  the last point will be taken as Onset
     }
     
     print (Em)
     print (trsh1)
-    
-    if (Em>t){
-      onset=Em
-    }
-    
-    
-#    if (onsetV > 1){
-#      onsetV=trsh1
-#      onset=Em
-#    }
-    
-    #==============================
-    
+    onset=Em
+    onsetV=AnnualTS[Em]
     Onset_Value[,"value"][s]=onsetV*10000
     Onset_Time[,"value"][s]=onset
     print (s)
     print (r)
     print (onset)
     print(onsetV)
+    #------------------------------------------------------------------------------------------------------------------------------
+    # point the exact point where thrushold is gained and estimate the time too 
+    "t=((AnnualTS[Em]-trsh1)/(AnnualTS[Em]-AnnualTS[Em-1]))
+    if (t==0){
+    Onset=Em  
+    }
+    if (((t>0) & (AnnualTS[Em]-AnnualTS[Em-1])>0 &(Em>t))){
+    onset=Em-t
+    onsetV= ((AnnualTS[Em]-AnnualTS[Em-1])*(1-t))+AnnualTS[Em-1]
+    }
+    
+    if ((t<0) | (AnnualTS[Em]-AnnualTS[Em-1])<0){
+    onset=Em
+    onsetV=AnnualTS[Em]
+    }
+    if (AnnualTS[Em]>t){
+    onset=Em
+    }"
+#don't think this works becasuse the image in MODIS doesn't allow us to gain this- as it uses MVC technique
+
+
+
+
+#    if (onsetV>1){
+#      onsetV=trsh1
+#      onset=Em
+#    }
+
+#==============================
+
     
     #+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     #                                                  Maximum

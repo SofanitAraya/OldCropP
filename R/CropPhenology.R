@@ -345,6 +345,7 @@ PhenoMetrics<- function (RawPath, BolAOI){
     if (t==0){
       Onset=Em  
     }
+    
     if (((t>0) & (AnnualTS[Em]-AnnualTS[Em-1])>0 &(Em>t))){
       onset=Em-t
       onsetV= ((AnnualTS[Em]-AnnualTS[Em-1])*(1-t))+AnnualTS[Em-1]
@@ -359,10 +360,10 @@ PhenoMetrics<- function (RawPath, BolAOI){
     }
     
     
-    if (onsetV>1){
-      onsetV=trsh1
-      onset=Em
-    }
+#    if (onsetV > 1){
+#      onsetV=trsh1
+#      onset=Em
+#    }
     
     #==============================
     

@@ -76,10 +76,16 @@ PhenoMetrics<- function (RawPath, BolAOI){
   require("rgdal")
   #library("rgdal")
   require("xlsx")
+  require("rgeos")
+  require("grid")
   
   setwd(RawPath)
-  raDir=dir(path=RawPath, pattern=c("*.img$", "*.rrd")
-#  shDir=dir(pattern="*.dbf$")
+  raDir=dir(path=RawPath, pattern = c(".img$|.tif$"))
+  
+  #, pattern="*.img$")
+            
+  #shDir=dir(pattern="*.dbf$")
+
   FileLen=length(raDir)
   filelen=length(raDir)
   
@@ -119,7 +125,10 @@ PhenoMetrics<- function (RawPath, BolAOI){
   
   i=1
   try=0
-  
+
+  if (filelen==0){ stop ('No image file obtained in the path mensioned - Check your file type')}
+  if (filelen<23){ stop ('The number of images not complete cover the season - check your image files')}
+
   while (i<(filelen+1)) {
     ras=raster(raDir[i])
     try[i]=extract (ras,shp, cellnumbers=TRUE)
@@ -127,7 +136,8 @@ PhenoMetrics<- function (RawPath, BolAOI){
   }
   
   try
-  
+
+
   cor=xyFromCell(ras,try[[1]][,"cell"])
   com=cbind(cor,try[[1]])
   

@@ -200,8 +200,6 @@ PhenoMetrics<- function (RawPath, BolAOI){
     #+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     
     # successive slops b/n  points
-    AnnualTS=px2_2001
-    
     j=7
     slop=(AnnualTS[j+1]-AnnualTS[j])
     slop=as.matrix(slop)

@@ -410,11 +410,10 @@ PhenoMetrics<- function (RawPath, BolAOI){
       j=j+1
     }
     
-    of1=AnnualTS[j-1]-AnnualTS[j]
-    of2=(trsh2-AnnualTS[of])
-    x=of2/of1
-    offset=of-x
-    
+  
+    offset=of
+    offsetV=AnnualTS[of] 
+
     print (offset)
     print(trsh2)
     
@@ -423,7 +422,9 @@ PhenoMetrics<- function (RawPath, BolAOI){
       offset=0
     }
     
-    Offset_Value[,"value"][s]=of
+    
+
+    Offset_Value[,"value"][s]=offsetV
     Offset_Time[,"value"][s]= offset
     
     #+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++

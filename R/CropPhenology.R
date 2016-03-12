@@ -425,7 +425,7 @@ PhenoMetrics<- function (RawPath, BolAOI){
       offset=0
     }
     
-    Offset_Value[,"value"][s]=trsh2
+    Offset_Value[,"value"][s]=of
     Offset_Time[,"value"][s]= offset
     
     #+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++

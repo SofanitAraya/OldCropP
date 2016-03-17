@@ -153,10 +153,13 @@ PhenoMetrics<- function (RawPath, BolAOI){
   Asymmetry=com
   
   r=length(try[[1]][,"value"])
+  Hd=list ("ID","X-Cord"," Y_Cord ","T1", "T2", "T3" ,"T4", "T5", "T6", "T7", "T8", "T9", "T10", "T11", "T12", "T13", "T14", "T15", "T16", "T17", "T18", "T19", "T20", "T21", "T22", "T23")  
+  AllP=data.frame()
   
   Head="ID X-Cord Y_Cord T1 T2 T3 T4 T5 T6 T7 T8 T9 T10 T11 T12 T13 T14 T15 T16 T17 T18 T19 T20 T21 T22 T23"
-  write(Head, file="All_Pixels.txt", append=TRUE, ncolumns=(length(Head)))
-  #write.xlsx(Head, file="All_Pixels.xls", append=TRUE, ncolumns=length(Head), sep=" ")
+  AllP=as.data.frame(Head)
+  write(Head, file="AllPixels.txt", append=TRUE, ncolumns=(length(Head)))
+  #write.xlsx(Head, file="AllPixels.xls", append=TRUE, ncolumns=length(Head), sep=" ")
   
   while(s>0 & s<(r+1)){ #iterate through the each pixel
     
@@ -180,9 +183,12 @@ PhenoMetrics<- function (RawPath, BolAOI){
     cordinate[1]=cor[s,1]
     cordinate[2]=cor[s,2]
     
-
+    AP=append(ts(list(s)),append(cordinate,AnnualTS))
+    AllP=rbind(AllP, AP)
     
-    write(append(s,append(cordinate,AnnualTS)), file="All_Pixels.txt", append=TRUE, ncolumns=(length(AnnualTS)+3))
+    
+    
+    write(append(s,append(cordinate,AnnualTS)), file="AllPixels.txt", append=TRUE, ncolumns=(length(AnnualTS)+3))
     ts.plot(AnnualTS)
     #s=s+1
     #AnnualTS is the time series of all the pixels
@@ -214,7 +220,7 @@ PhenoMetrics<- function (RawPath, BolAOI){
     range1=0.1*min1 #to get 20% of the min before Max
     range2=0.1*min2#to get 20% of the min after Max
     trsh1=min(AnnualTS[5:6])+range1 # to get 20% more greenness than the min before max
-    trsh2=min(AnnualTS[21:22])+range2 # to get 20% more greenness than the min after max
+    trsh2=min(AnnualTS[22:23])+range2 # to get 20% more greenness than the min after max
     #------------------------------------------------------------------------------------------------------------------------------
     # last -ve slop
     len=length(slop)
@@ -273,15 +279,18 @@ PhenoMetrics<- function (RawPath, BolAOI){
         }
       }
     }
+    # ls=5 =>  the last slope (i.e b/n 11 and 12 is decreasing), 
+    #in this case check for the previous and next slope if it is not continue decreasing but was decreasing before that then 
+    # the onset is at image 12 
     
     if (ls==5){
       if ((slop[ls-1]<0) & ((AnnualTS[13]-AnnualTS[12])>0)){
-        Em=ls+7
+        Em=12
       }
       if (slop[ls-1]>0){
         k=7
         while (k<12){
-          if (AnnualTS[k]>trsh1){
+          if ((AnnualTS[k]>trsh1) & (slop[k-6]>0)){
             Em=k
             break
           }
@@ -294,7 +303,7 @@ PhenoMetrics<- function (RawPath, BolAOI){
     if ((ls<5)& (ls>2)){
       
       if (slop[ls-1]<(-0.01)){ # if the previous is -ve, i.e deep decreament
-        Em=ls+6
+        Em=ls+7
       }
       touched=FALSE
       if (slop[ls-1]>(-0.01)){ #if it is minor decrease on genneral +ve trend
@@ -528,6 +537,9 @@ PhenoMetrics<- function (RawPath, BolAOI){
   ###===================================================================================================
   par(mfrow=c(2,2))
   
+  names(AllP)=HD
+  write.xlsx(AllP, paste(getwd(), "Metrics", sep="/"))
+
   MT=rasterFromXYZ(Max_Time)
   crs(MT)<-crs(ras)
   plot(MT$value, main="Max Time")
@@ -609,7 +621,7 @@ PhenoMetrics<- function (RawPath, BolAOI){
 #' @param Id4 -  ID number for point 4
 #' @param Id5 -  ID number for point 5
 #' @title Time series curves for Multiple points in the Region of Interest
-#' @description MultiPointsPlot function takes the ID for the pixels within the region of interst and returns, the timeseries curves from these points, ploted together. The Id numbers can be obtained from the txt file (All_Pixels.txt) outputs.
+#' @description MultiPointsPlot function takes the ID for the pixels within the region of interst and returns, the timeseries curves from these points, ploted together. The Id numbers can be obtained from the txt file (AllPixels.txt) outputs.
 #' @keywords Curve from multiple points 
 #' @keywords time-series curves
 #' @author Sofanit Araya
@@ -622,7 +634,7 @@ PhenoMetrics<- function (RawPath, BolAOI){
 #' @seealso PhenoMetrics()
 #' 
 MultiPointsPlot<- function (N,Id1,Id2,Id3,Id4,Id5){
-  AP=read.table("All_pixels.txt", header=TRUE)
+  AP=read.table("Allpixels.txt", header=TRUE)
   APP=as.matrix(AP[Id1,])
 
   if (N>5){

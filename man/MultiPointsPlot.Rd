@@ -41,7 +41,7 @@ Multiple time series curves together at the plot pannel
 \description{
 MultiPointsPlot function takes the ID for the pixels within the region of interst and returns, the timeseries curves from these points, ploted together. The Id numbers can be obtained from the txt file (All_Pixels.txt) outputs.
 
-MultiPointsPlot function takes the ID for the pixels within the region of interst and returns, the timeseries curves from these points, ploted together. The Id numbers can be obtained from the txt file (All_Pixels.txt) outputs.
+MultiPointsPlot function takes the ID for the pixels within the region of interst and returns, the timeseries curves from these points, ploted together. The Id numbers can be obtained from the txt file (AllPixels.txt) outputs.
 }
 \examples{
 MultiPointsPlot(3,11,114,125)

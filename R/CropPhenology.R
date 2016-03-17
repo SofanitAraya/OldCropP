@@ -537,7 +537,7 @@ PhenoMetrics<- function (RawPath, BolAOI){
   ###===================================================================================================
   par(mfrow=c(2,2))
   
-  names(AllP)=HD
+  names(AllP)=Hd
   write.xlsx(AllP, paste(getwd(), "Metrics", sep="/"))
 
   MT=rasterFromXYZ(Max_Time)

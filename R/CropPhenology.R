@@ -87,7 +87,7 @@ PhenoMetrics<- function (RawPath, BolAOI){
   #shDir=dir(pattern="*.dbf$")
 
   FileLen=length(raDir)
-  filelen=length(raDir)
+  #filelen=length(raDir)
   
   #f=system.file(raDir[1], package="raster")
   
@@ -126,10 +126,10 @@ PhenoMetrics<- function (RawPath, BolAOI){
   i=1
   try=0
 
-  if (filelen==0){ stop ('No image file obtained in the path mensioned - Check your file type')}
-  if (filelen<23){ stop ('The number of images not complete cover the season - check your image files')}
+  if (FileLen==0){ stop ('No image file obtained in the path mensioned - Check your file type')}
+  if (FileLen<23){ stop ('The number of images not complete cover the season - check your image files')}
 
-  while (i<(filelen+1)) {
+  while (i<(FileLen+1)) {
     ras=raster(raDir[i])
     try[i]=extract (ras,shp, cellnumbers=TRUE)
     i=i+1
@@ -153,12 +153,12 @@ PhenoMetrics<- function (RawPath, BolAOI){
   Asymmetry=com
   
   r=length(try[[1]][,"value"])
-  Hd=list ("ID","X-Cord"," Y_Cord ","T1", "T2", "T3" ,"T4", "T5", "T6", "T7", "T8", "T9", "T10", "T11", "T12", "T13", "T14", "T15", "T16", "T17", "T18", "T19", "T20", "T21", "T22", "T23")  
+  Hd=list ("ID","X-Cord"," Y_Cord","T1", "T2", "T3" ,"T4", "T5", "T6", "T7", "T8", "T9", "T10", "T11", "T12", "T13", "T14", "T15", "T16", "T17", "T18", "T19", "T20", "T21", "T22", "T23")  
   AllP=data.frame()
   
-  Head="ID X-Cord Y_Cord T1 T2 T3 T4 T5 T6 T7 T8 T9 T10 T11 T12 T13 T14 T15 T16 T17 T18 T19 T20 T21 T22 T23"
-  AllP=as.data.frame(Head)
-  write(Head, file="AllPixels.txt", append=TRUE, ncolumns=(length(Head)))
+  #Head="ID X-Cord Y_Cord T1 T2 T3 T4 T5 T6 T7 T8 T9 T10 T11 T12 T13 T14 T15 T16 T17 T18 T19 T20 T21 T22 T23"
+  #AllP=as.data.frame(Head)
+  #write(Head, file="AllPixels.txt", append=TRUE, ncolumns=(length(Head)))
   #write.xlsx(Head, file="AllPixels.xls", append=TRUE, ncolumns=length(Head), sep=" ")
   
   while(s>0 & s<(r+1)){ #iterate through the each pixel
@@ -171,7 +171,7 @@ PhenoMetrics<- function (RawPath, BolAOI){
     q=1 #reset qon for the next pixel comparision
     #===================== Iterate throught the files for s-th pixels to get the curve
     
-    while (q>0 & q<filelen+1){
+    while (q>0 & q<FileLen+1){
       GRD_CD=(try[[q]][,"value"][s])/10000
       if (is.na(GRD_CD)){
         GRD_CD=(try[[q-1]][,"value"][s])/10000
@@ -184,11 +184,12 @@ PhenoMetrics<- function (RawPath, BolAOI){
     cordinate[2]=cor[s,2]
     
     AP=append(ts(list(s)),append(cordinate,AnnualTS))
+    #print (AP)
     AllP=rbind(AllP, AP)
     
     
     
-    write(append(s,append(cordinate,AnnualTS)), file="AllPixels.txt", append=TRUE, ncolumns=(length(AnnualTS)+3))
+    #write(append(s,append(cordinate,AnnualTS)), file="AllPixels.txt", append=TRUE, ncolumns=(length(AnnualTS)+3))
     ts.plot(AnnualTS)
     #s=s+1
     #AnnualTS is the time series of all the pixels
@@ -287,6 +288,11 @@ PhenoMetrics<- function (RawPath, BolAOI){
       if ((slop[ls-1]<0) & ((AnnualTS[13]-AnnualTS[12])>0)){
         Em=12
       }
+      if ((slop[ls-1]<0) & ((AnnualTS[13]-AnnualTS[12])<0)){
+        if (AnnualTS[10]>trsh){Em=10 }
+        if (AnnualTS[10]<trsh){Em=13}
+      }
+      
       if (slop[ls-1]>0){
         k=7
         while (k<12){
@@ -538,7 +544,7 @@ PhenoMetrics<- function (RawPath, BolAOI){
   par(mfrow=c(2,2))
   
   names(AllP)=Hd
-  write.xlsx(AllP, paste(getwd(), "Metrics", sep="/"))
+  write.xlsx(AllP, "AllPixels.xlsx")
 
   MT=rasterFromXYZ(Max_Time)
   crs(MT)<-crs(ras)

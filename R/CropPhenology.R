@@ -179,6 +179,8 @@ PhenoMetrics<- function (RawPath, BolAOI){
       AnnualTS[q]=GRD_CD
       q=q+1
     }
+    
+    print (AnnualTS)
     cordinate=0
     cordinate[1]=cor[s,1]
     cordinate[2]=cor[s,2]
@@ -289,8 +291,8 @@ PhenoMetrics<- function (RawPath, BolAOI){
         Em=12
       }
       if ((slop[ls-1]<0) & ((AnnualTS[13]-AnnualTS[12])<0)){
-        if (AnnualTS[10]>trsh){Em=10 }
-        if (AnnualTS[10]<trsh){Em=13}
+        if (AnnualTS[10]>trsh1){Em=10 }
+        if (AnnualTS[10]<trsh1){Em=13}
       }
       
       if (slop[ls-1]>0){
@@ -303,6 +305,7 @@ PhenoMetrics<- function (RawPath, BolAOI){
           k=k+1
         }
       }
+      if (Em==0){ Em=12} # if incase the posetive slop in before 11 like -,-,-,+,- slope
     }
     
     
@@ -351,6 +354,32 @@ PhenoMetrics<- function (RawPath, BolAOI){
       }
       if (tk==1){ Em=12 } # if the slops gets all -ve after ls -  the last point will be taken as Onset
     }
+    #------------------------------------------------------------------------------------------------------------------------------
+    t=((AnnualTS[Em]-trsh1)/(AnnualTS[Em]-AnnualTS[Em-1]))
+    if (t==0){
+      Onset=Em  
+    }
+    if (((t>0) & (AnnualTS[Em]-AnnualTS[Em-1])>0 &(Em>t))){
+      onset=Em-t
+      onsetV= ((AnnualTS[Em]-AnnualTS[Em-1])*(1-t))+AnnualTS[Em-1]
+    }
+    
+    if ((t<0) | (AnnualTS[Em]-AnnualTS[Em-1])<0){
+      onset=Em
+      onsetV=AnnualTS[Em]
+    }
+    if (Em>t){
+      onset=Em
+    }
+    print (Em)
+    print (trsh1)
+    
+    #    if (onsetV>1){
+    #      onsetV=trsh1
+    #      onset=Em
+    #    }
+    
+    #==============================
     
     print (Em)
     print (trsh1)
@@ -425,9 +454,13 @@ PhenoMetrics<- function (RawPath, BolAOI){
       j=j+1
     }
     
-  
-    offset=of
-    offsetV=AnnualTS[of] 
+    of1=AnnualTS[j-1]-AnnualTS[j]
+    of2=(trsh2-AnnualTS[of])
+    x=of2/of1
+    offset=of-x
+
+#    offset=of
+#    offsetV=AnnualTS[of] 
 
     print (offset)
     print(trsh2)
@@ -439,7 +472,7 @@ PhenoMetrics<- function (RawPath, BolAOI){
     
     
 
-    Offset_Value[,"value"][s]=offsetV
+    Offset_Value[,"value"][s]=trsh2
     Offset_Time[,"value"][s]= offset
     
     #+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -544,7 +577,7 @@ PhenoMetrics<- function (RawPath, BolAOI){
   par(mfrow=c(2,2))
   
   names(AllP)=Hd
-  write.xlsx(AllP, "AllPixels.xlsx")
+  write.csv(AllP, "AllPixels.csv")
 
   MT=rasterFromXYZ(Max_Time)
   crs(MT)<-crs(ras)

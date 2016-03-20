@@ -26,7 +26,9 @@ Multiple time series curves together at the plot pannel
 MultiPointsPlot function takes the ID for the pixels within the region of interst and returns, the timeseries curves from these points, ploted together. The Id numbers can be obtained from the txt file (AllPixels.txt) outputs.
 }
 \details{
-this function allows ploting multiple points together in a single plot which helps understanding the growth variability across the field.This inforaiton can further analyzed to provide insight on other environemtal factors.
+This function allows plotting time series curves from multiple points together in a single plot which helps understanding the growth variability across the field.This inforaiton can further analyzed to provide insight on other environemtal factors.
+
+The maximum number of pixeles allowed plotting togther are 5 points.
 }
 \examples{
 MultiPointsPlot(3,11,114,125)

@@ -35,14 +35,15 @@
 #'OnsetT and OnsetV
 #'The OnsetT and OnsetV are defined as the value and time when the crop starts attaining high vegetation index increasingly. Thechnically, the algorthm used looks like as follows:
 #' 
-#' =======================================================================================================================
+#' ===================================================================================================
 #' 
-#'  Assumption –
+#' Assumption –
+#' 
 #' 1-  Farm clearance done at – i.e. during time of  image 5 and image 6 so the trushold is considered to be mean of image 5 and image 6 
-#' trsh= (image5+image6)/2
+#'     trsh= (image5+image6)/2
 #' 2-	The time frame for onset is between (…..) i.e image 7 and image 12
-#' So we calculate the slope of the connecting line between values of images in that period
-#' Slope=array of  (slope b/n 7 and 8, slope b/n 8 and 9, slope b/n 9 and 10, slope b/n 10 and 11, slope b/n 11 and 12
+#'      So we calculate the slope of the connecting line between values of images in that period
+#'      Slope=array of  (slope b/n 7 and 8, slope b/n 8 and 9, slope b/n 9 and 10, slope b/n 10 and 11, slope b/n 11 and 12
 #' 3-	The slope observed next to trough is considered as Onset
 #' 
 #' So we calculate the last slope bellow - 0.01, just to avoid the minor details
@@ -69,7 +70,7 @@
 #'                  The onset is that point where the +ve slope started 
 #'            Case 4 – last –ve at the  beginning (i.e – slope 1 or 2)
 #'                  Consider that as low vegetation after clearance and take the point where trsh exceeded as Onset
-#' =======================================================================================================================
+#' ===================================================================================================
 #' 
 #' OffsetV and OffsetT
 #' 
@@ -706,6 +707,7 @@ PhenoMetrics<- function (RawPath, BolAOI){
 }  
 #' @export
 #' @return Multiple time series curves together at the plot pannel
+#' 
 #' @param N- number of intersted points
 #' @param Id1 -  ID number for point 1
 #' @param Id2 -  Id number for point 2
@@ -718,7 +720,9 @@ PhenoMetrics<- function (RawPath, BolAOI){
 #' @keywords time-series curves
 #' @author Sofanit Araya
 #' 
-#' @details this function allows ploting multiple points together in a single plot which helps understanding the growth variability across the field.This inforaiton can further analyzed to provide insight on other environemtal factors.
+#' @details This function allows plotting time series curves from multiple points together in a single plot which helps understanding the growth variability across the field.This inforaiton can further analyzed to provide insight on other environemtal factors.
+#' @details The maximum number of pixeles allowed plotting togther are 5 points.
+#' 
 #' @examples MultiPointsPlot(3,11,114,125)
 #' 
 #' 

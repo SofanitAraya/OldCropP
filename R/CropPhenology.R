@@ -20,7 +20,7 @@
 #' @author   Sofanit Araya
 #' @keywords Phenology, remote sensing, satellite image
 #' @seealso MultiPointsPlot (N,Id1, Id2...Idn)
-#' @description This function extracts major phenologic parameters from time series vegetaion index data. Total of 11 phenologic metrics as raster and Ascii files. The function takes path of the vegetation index data and the boolean Value for BolAOI (True- if there is AOI polygon, FALSE- if the parameters are calculated for the whole region).
+#' @description This function extracts major phenologic parameters from Moderate Resolution Imaging Spectroradiometer (MODIS)  time series vegetaion index data. Total of 11 phenologic metrics as raster and Ascii files. The function takes path of the vegetation index data and the boolean Value for BolAOI (True- if there is AOI polygon, FALSE- if the parameters are calculated for the whole region).
 #' @param Rawpath - Text value - the path where the time series images saved 
 #' @param BolAOI-  Logical value - if there is any area of intererst or not
 #' @export
@@ -30,6 +30,59 @@
 #'Different methods have been employed to extract phenologic metrics, which include threshold definition (White et al., 1997), decomposition of the vegetation dynamic curve using harmonic analysis (Jakubauskas et al., 2001; Roerink et al., 2011) (Zhang et al., 2003) , taking the first derivative of the smoothed and non-smoothed vegetation index dynamics curves (Moulin et al., 1997) and defining the crossover point of the smoothed and non-smoothed dynamics curves (Hill and Donald, 2003; Reed et al., 1994). In this package the phenologic metrics were extracted based on correlation of the description of crop physiological stages (Zadoks etal. 1974) with the relative greenness of the crop on the vegetation dynamics. 
 #'The list of the phenologic metrics and their description are provided at the website - www.cropphenology.wix.com/package
 #'
+#'Detail of metrics definition
+#'
+#'OnsetT and OnsetV
+#'The OnsetT and OnsetV are defined as the value and time when the crop starts attaining high vegetation index increasingly. Thechnically, the algorthm used looks like as follows:
+#' 
+#' =======================================================================================================================
+#' 
+#'  Assumption –
+#' 1-  Farm clearance done at – i.e. during time of  image 5 and image 6 so the trushold is considered to be mean of image 5 and image 6 
+#' trsh= (image5+image6)/2
+#' 2-	The time frame for onset is between (…..) i.e image 7 and image 12
+#' So we calculate the slope of the connecting line between values of images in that period
+#' Slope=array of  (slope b/n 7 and 8, slope b/n 8 and 9, slope b/n 9 and 10, slope b/n 10 and 11, slope b/n 11 and 12
+#' 3-	The slope observed next to trough is considered as Onset
+#' 
+#' So we calculate the last slope bellow - 0.01, just to avoid the minor details
+#'                  
+#'                  The last negative slope between image 7 and image 12
+#'            Case 1 – No negative slope (i.e all increasing)
+#'                Step 1- compare the values with the trsh value and the point where the trsh is excedded is Onset
+#'              Case 1.1- check if the next slop is –ve , although it is above -0.01
+#'                  If yes – take the next 
+#'                  If no – the point where the trsh is exceeded is Onset
+#'              Case 1.2- if trsh is very high (sometimes due to uncleared weed or any other causes…)
+#'                  Take the highest slope
+#'            Case 2- last –ve is at the end of the onset time frame
+#'                  Check the previous slope (does it come from down or just a small trough?)
+#'               Case 2.1 Came from down (previous is –ve)
+#'                  Check if the slope increases at image 12 then Onset is at 12
+#'               Case 2.2 previous slope is +ve (it is a small trough)
+#'                  Ignore and consider it as all positive and take the point where threshold exceeded
+#'            Case3 – last –ve between 2 and 5
+#'                  Check previous slope
+#'               Case 3.1 – if previous slope is +ve
+#'                  Consider it as a small trough and take the threshold exceeding point as Onset
+#'               Case 3.2 – previous slope is –ve
+#'                  The onset is that point where the +ve slope started 
+#'            Case 4 – last –ve at the  beginning (i.e – slope 1 or 2)
+#'                  Consider that as low vegetation after clearance and take the point where trsh exceeded as Onset
+#' =======================================================================================================================
+#' 
+#' OffsetV and OffsetT
+#' 
+#' OffsetV and OffsetT are defined as the egetation index value and time when the plant senesence. On the timeseries vegetation curve, OffsetV and OffsetT are defined when the offset threshold value is attained
+#' The threshold is defined as 10% above the total non green reference at the end pf the growing season, i.e average of 22 and 23 MODIS imaging periods.
+#' 
+#' MaxV and MaxT
+#' 
+#' MaxV and MaxT are defined as he value and time when the maximum vegetation index value attained during the growing season.
+#' 
+#'                                    Maximum (NDVI1, NDVI23)
+#' 
+#' 
 #'@examples 
 #' # EXAMPLE - 1
 #'
@@ -665,6 +718,7 @@ PhenoMetrics<- function (RawPath, BolAOI){
 #' @keywords time-series curves
 #' @author Sofanit Araya
 #' 
+#' @details this function allows ploting multiple points together in a single plot which helps understanding the growth variability across the field.This inforaiton can further analyzed to provide insight on other environemtal factors.
 #' @examples MultiPointsPlot(3,11,114,125)
 #' 
 #' 

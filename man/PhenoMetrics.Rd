@@ -56,7 +56,7 @@ The OnsetT and OnsetV are defined as the value and time when the crop starts att
 
 Assumption - 
 
-1-Farm clearance done at – i.e. during time of  image 5 and image 6 so the trushold is considered to be mean of image 5 and image 6
+1-Farm clearance done during time of  image 5 and image 6 so the trushold is considered to be mean of image 5 and image 6
 
 trsh= (image5+image6)/2
 
@@ -67,10 +67,12 @@ Slope=array of  (slope b/n 7 and 8, slope b/n 8 and 9, slope b/n 9 and 10, slope
 3- The slope observed next to trough is considered as Onset. So we calculate the last slope bellow - 0.01, just to avoid the minor details
                  
 The last negative slope between image 7 and image 12
+
 Case 1 - No negative slope (i.e all increasing)
  
  Step 1 - compare the values with the trsh value and the point where the trsh is excedded is Onset
-    Case 1.1 - check if the next slop is –ve , although it is above -0.01
+ 
+    Case 1.1 - check if the next slope is -ve , although it is above -0.01
     
        If yes => take the next 
        
@@ -80,11 +82,11 @@ Case 1 - No negative slope (i.e all increasing)
     
                  Take the highest slope
                  
-Case 2- last –ve is at the end of the onset time frame
+Case 2- last -ve is at the end of the onset time frame
 
  Check the previous slope (does it come from down or just a small trough?)
    
-   Case 2.1 Came from down (previous is –ve)
+   Case 2.1 Came from down (previous is -ve)
 
              Check if the slope increases at image 12 then Onset is at 12
 

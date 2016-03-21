@@ -33,10 +33,15 @@
 #'Detail of metrics definition
 #'
 #'OnsetT and OnsetV
-#'The OnsetT and OnsetV are defined as the value and time when the crop starts attaining high vegetation index increasingly. Thechnically, the algorthm used looks like as follows:
+#'-----------------
+#'
+#'The OnsetT and OnsetV are defined as the value and time when the crop starts attaining high vegetation index increasingly. 
+#'
+#'Thechnically, the algorthm used looks like as follows:
 #' 
-#' ===================================================================================================
-#' 
+#'ALGORITHM
+#'
+#'  
 #' Assumption - 
 #' 
 #'1-Farm clearance done during time of  image 5 and image 6 so the trushold is considered to be mean of image 5 and image 6
@@ -91,18 +96,19 @@
 #'Case 4 - last -ve at the  beginning (i.e slope 1 or 2)
 #'
 #'        Consider that as low vegetation after clearance and take the point where trsh exceeded as Onset
-#' ===================================================================================================
-#' 
+#'#' 
 #' OffsetV and OffsetT
-#' 
+#'--------------------
+#'  
 #' OffsetV and OffsetT are defined as the egetation index value and time when the plant senesence. On the timeseries vegetation curve, OffsetV and OffsetT are defined when the offset threshold value is attained
 #' The threshold is defined as 10% above the total non green reference at the end pf the growing season, i.e average of 22 and 23 MODIS imaging periods.
 #' 
 #' MaxV and MaxT
+#' --------------
 #' 
 #' MaxV and MaxT are defined as he value and time when the maximum vegetation index value attained during the growing season.
 #' 
-#'                                    Maximum (NDVI1, NDVI23)
+#'  Maximum (NDVI1, NDVI23)
 #' 
 #' 
 #'@examples 
@@ -725,7 +731,7 @@ PhenoMetrics<- function (RawPath, BolAOI){
 #' @export
 #' @return Multiple time series curves together at the plot pannel
 #' 
-#' @param N- number of intersted points
+#' @param N - number of intersted points
 #' @param Id1 -  ID number for point 1
 #' @param Id2 -  Id number for point 2
 #' @param Id3 -  ID number for point 3

@@ -17,7 +17,7 @@ MultiPointsPlot(N, Id1, Id2, Id3, Id4, Id5)
 
 \item{Id5}{-  ID number for point 5}
 
-\item{N-}{number of intersted points}
+\item{N}{-  number of intersted points}
 }
 \value{
 Multiple time series curves together at the plot pannel

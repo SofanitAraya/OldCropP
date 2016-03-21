@@ -54,39 +54,58 @@ The OnsetT and OnsetV are defined as the value and time when the crop starts att
 
 ===================================================================================================
 
-Assumption –
+Assumption - 
 
-Farm clearance done at – i.e. during time of  image 5 and image 6 so the trushold is considered to be mean of image 5 and image 6 
+1-Farm clearance done at – i.e. during time of  image 5 and image 6 so the trushold is considered to be mean of image 5 and image 6
+
 trsh= (image5+image6)/2
-The time frame for onset is between (…..) i.e image 7 and image 12
-So we calculate the slope of the connecting line between values of images in that period
-Slope=array of  (slope b/n 7 and 8, slope b/n 8 and 9, slope b/n 9 and 10, slope b/n 10 and 11, slope b/n 11 and 12
-3-	The slope observed next to trough is considered as Onset
 
-So we calculate the last slope bellow - 0.01, just to avoid the minor details
+2- The time frame for onset is between MODIS imaging time 7 and 12. We calculate the slope of the connecting line between values of images in that period
+
+Slope=array of  (slope b/n 7 and 8, slope b/n 8 and 9, slope b/n 9 and 10, slope b/n 10 and 11, slope b/n 11 and 12
+
+3- The slope observed next to trough is considered as Onset. So we calculate the last slope bellow - 0.01, just to avoid the minor details
                  
-                 The last negative slope between image 7 and image 12
-           Case 1 – No negative slope (i.e all increasing)
-               Step 1- compare the values with the trsh value and the point where the trsh is excedded is Onset
-             Case 1.1- check if the next slop is –ve , although it is above -0.01
-                 If yes – take the next 
-                 If no – the point where the trsh is exceeded is Onset
-             Case 1.2- if trsh is very high (sometimes due to uncleared weed or any other causes…)
+The last negative slope between image 7 and image 12
+Case 1 - No negative slope (i.e all increasing)
+ 
+ Step 1 - compare the values with the trsh value and the point where the trsh is excedded is Onset
+    Case 1.1 - check if the next slop is –ve , although it is above -0.01
+    
+       If yes => take the next 
+       
+       If no => the point where the trsh is exceeded is Onset
+       
+    Case 1.2- if trsh is very high (sometimes due to uncleared weed or any other causes…)
+    
                  Take the highest slope
-           Case 2- last –ve is at the end of the onset time frame
-                 Check the previous slope (does it come from down or just a small trough?)
-              Case 2.1 Came from down (previous is –ve)
-                 Check if the slope increases at image 12 then Onset is at 12
-              Case 2.2 previous slope is +ve (it is a small trough)
-                 Ignore and consider it as all positive and take the point where threshold exceeded
-           Case3 – last –ve between 2 and 5
-                 Check previous slope
-              Case 3.1 – if previous slope is +ve
-                 Consider it as a small trough and take the threshold exceeding point as Onset
-              Case 3.2 – previous slope is –ve
-                 The onset is that point where the +ve slope started 
-           Case 4 – last –ve at the  beginning (i.e – slope 1 or 2)
-                 Consider that as low vegetation after clearance and take the point where trsh exceeded as Onset
+                 
+Case 2- last –ve is at the end of the onset time frame
+
+ Check the previous slope (does it come from down or just a small trough?)
+   
+   Case 2.1 Came from down (previous is –ve)
+
+             Check if the slope increases at image 12 then Onset is at 12
+
+   Case 2.2 previous slope is +ve (it is a small trough)
+   
+             Ignore and consider it as all positive and take the point where threshold exceeded
+Case3 - last -ve between 2 and 5
+   
+   Check previous slope
+   
+   Case 3.1 - if previous slope is +ve
+         
+         Consider it as a small trough and take the threshold exceeding point as Onset
+         
+   Case 3.2 - previous slope is -ve
+
+        The onset is that point where the +ve slope started 
+
+Case 4 - last -ve at the  beginning (i.e slope 1 or 2)
+
+       Consider that as low vegetation after clearance and take the point where trsh exceeded as Onset
 ===================================================================================================
 
 OffsetV and OffsetT

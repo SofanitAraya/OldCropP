@@ -39,11 +39,11 @@
 #' 
 #' Assumption –
 #' 
-#' 1-  Farm clearance done at – i.e. during time of  image 5 and image 6 so the trushold is considered to be mean of image 5 and image 6 
-#'     trsh= (image5+image6)/2
-#' 2-	The time frame for onset is between (…..) i.e image 7 and image 12
-#'      So we calculate the slope of the connecting line between values of images in that period
-#'      Slope=array of  (slope b/n 7 and 8, slope b/n 8 and 9, slope b/n 9 and 10, slope b/n 10 and 11, slope b/n 11 and 12
+#' Farm clearance done at – i.e. during time of  image 5 and image 6 so the trushold is considered to be mean of image 5 and image 6 
+#' trsh= (image5+image6)/2
+#' The time frame for onset is between (…..) i.e image 7 and image 12
+#' So we calculate the slope of the connecting line between values of images in that period
+#' Slope=array of  (slope b/n 7 and 8, slope b/n 8 and 9, slope b/n 9 and 10, slope b/n 10 and 11, slope b/n 11 and 12
 #' 3-	The slope observed next to trough is considered as Onset
 #' 
 #' So we calculate the last slope bellow - 0.01, just to avoid the minor details
@@ -111,10 +111,6 @@
 #' @references White, M.A., Thornton, P.E., Running, S.W., 1997. A continental phenology model for monitoring vegetation responses to interannual climatic variability. Glo. Biogeochem. Cyc. 11, 217-234.
 #' @references Zadoks, J.C., Chang, T.T., Konzak, C.F., 1974. A decimal code for the growth stages of cereals. Weed Research 14, 415-421.
 
-
-#' 
-#' 
-#' 
 PhenoMetrics<- function (RawPath, BolAOI){
   
   # install.packages("shapefiles")

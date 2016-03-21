@@ -6,11 +6,10 @@
 \packageTitle{CropPhenology}
 }
 \description{
-This package extracts crop phenological metrics from time series vegetation index data. 
+This package extracts crop phenological metrics from Moderate Resolution Imaging Spectroradiometer (MODIS) time series vegetation index data. 
 }
 \details{
-The CropPhnology package defines the phenologic metrics which are at close correlation with the crop physiological stages based on the description at Zadok crop developmental growth stages.  
-
+The 16 days composite of MODIS vegetation index data provides the overall growth condition of the crop in the growing season with regular capture time. Plotting the vegetation index vakue accross time, provides the time series curve which could reporesent the seaonal growth pattern of the crop. The CropPhenology package extracts metrics from the time seris curve based on the curve nature and shape. These metrics indicate different physiological stages and condition of the crop. i
 }
 \author{
 \packageAuthor{CropPhenology}

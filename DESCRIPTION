@@ -11,7 +11,7 @@ RoxygenNote: 5.0.1
 URL: https://github.com/SofanitAraya/CropPhenology
 Repository: github
 Depends: foreign, raster, sp (>= 1.0-13), maptools, shapefiles, rgdal
-Suggests: Rcpp, rgdal
+Suggests: Rcpp, rgdal, rgeos
 SystemRequirments: R (> 3.0)
 LazyLoad: yes
 LazyData: yes

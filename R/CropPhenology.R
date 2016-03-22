@@ -301,7 +301,7 @@ PhenoMetrics<- function (RawPath, BolAOI){
       f=f+1
     }
     min1=mean(AnnualTS[5:6]) #minimum before the amplitude
-    min2=mean(AnnualTS[21:22]) #minimum after the amplitude
+    min2=mean(AnnualTS[22:23]) #minimum after the amplitude
     range1=0.1*min1 #to get 20% of the min before Max
     range2=0.1*min2#to get 20% of the min after Max
     trsh1=min(AnnualTS[5:6])+range1 # to get 20% more greenness than the min before max

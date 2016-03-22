@@ -15,8 +15,6 @@
 #' @return  AreaAfterMax - the integral area under the curve between Maximum NDVI and Offser
 #' @return  TINDVI - the integral area under the curve 
 #' @return  Asymmetry - the difference between AreaBeforeMax and AreaAfterMax 
-
-#' 
 #' @author   Sofanit Araya
 #' @keywords Phenology, remote sensing, satellite image
 #' @seealso MultiPointsPlot (N,Id1, Id2...Idn)

@@ -525,8 +525,14 @@ PhenoMetrics<- function (RawPath, BolAOI){
     #+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     #                                                  Offset
     #+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    ofslp=AnnualTS[21]-AnnualTS[20]    
     crp=TRUE
+    ofslp=matrix(ofslp)
+    ofslp[2]=AnnualTS[22]-AnnualTS[21]
+    ofslp[3]=AnnualTS[23]-AnnualTS[22]
     
+    
+
     j=Max_T #J is the lower bound on down AnnualTS / upeer bound in sequence
     while (j<(FileLen+1)){
       if (AnnualTS[j]<trsh2){
@@ -543,19 +549,37 @@ PhenoMetrics<- function (RawPath, BolAOI){
 
 #    offset=of
 #    offsetV=AnnualTS[of] 
+    offsetT=offset
+    offsetV=trsh2
 
-    print (offset)
-    print(trsh2)
-    
     if ((max-trsh2)<0.05) {
       crp=FALSE
-      offset=0
+      offsetT=0
+      offsetV=0
+    }
+    if (offset>20){
+      if (ofslp[3]>0){
+        OffsetT=22
+        offsetV=AnnualTS[22]
+         
+      }
+      if (ofslp[2]>0){
+        OffsetT=21
+        offsetV=AnnualTS[21]
+        
+      }
+      if (ofslp[1]>0){
+        OffsetT=20
+        offsetV=AnnualTS[20]
+      }
+      
     }
     
-    
+    print (offsetT)
+    print (offsetV)
 
-    Offset_Value[,"value"][s]=trsh2
-    Offset_Time[,"value"][s]= offset
+    Offset_Value[,"value"][s]=OffsetV
+    Offset_Time[,"value"][s]= offsetT
     
     #+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     #                                                Area

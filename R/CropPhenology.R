@@ -528,7 +528,7 @@ PhenoMetrics<- function (RawPath, BolAOI){
     crp=TRUE
     
     j=Max_T #J is the lower bound on down AnnualTS / upeer bound in sequence
-    while (j<FileLen){
+    while (j<(FileLen+1)){
       if (AnnualTS[j]<trsh2){
         of=j
         break

@@ -233,7 +233,14 @@ PhenoMetrics<- function (RawPath, BolAOI){
   Area_Before=com
   Area_After=com
   Asymmetry=com
+  GreenUpSlope=com
+  BrownDownSlope=com
+  LengthGS=com
+  BeforeMaxT=com
+  AfterMaxT=com
   
+
+
   r=length(try[[1]][,"value"])
   Hd=list ("ID","X-Cord"," Y_Cord","T1", "T2", "T3" ,"T4", "T5", "T6", "T7", "T8", "T9", "T10", "T11", "T12", "T13", "T14", "T15", "T16", "T17", "T18", "T19", "T20", "T21", "T22", "T23")  
   AllP=data.frame()
@@ -581,6 +588,9 @@ PhenoMetrics<- function (RawPath, BolAOI){
     Offset_Value[,"value"][s]=offsetV
     Offset_Time[,"value"][s]= offsetT
     
+
+
+  
     #+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     #                                                Area
     #+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -665,15 +675,17 @@ PhenoMetrics<- function (RawPath, BolAOI){
   ###===================================================================================================
   #Defining secondary metrics
   
-  GreenUpSlope=Max_Time
-  GreenUpSlope[,"value"]=(Max_Value[,"value"]-(Onset_Value[,"value"]/10000))/(Max_Time[,"value"]-Onset_Time[,"value"])
-  write.table(GreenUpSlope, "GreenUpSlope.txt")
+  BeforeMaxT[,"value"]=Max_Time[,"value"]-Onset_Time[,"value"]
+  write.table(BeforeMaxT, "BeforeMaxT.txt")
+
+  AterMaxT[,"value"]=Offset_Time[,"value"]-Max_Time[,"value"]
+  write.table(AfterMaxT, "AfterMaxT.txt")
   
-  BrownDownSlope=Max_Time
+  #BrownDownSlope=Max_Time
   BrownDownSlope[,"value"]=(Max_Value[,"value"]-Offset_Value[,"value"])/(Offset_Time[,"value"]-Max_Time[,"value"])
   write.table(BrownDownSlope, "BrownDownSlope.txt")
   
-  LengthGS=Max_Time
+  #LengthGS=Max_Time
   LengthGS[,"value"]=(Offset_Time[,"value"]-Onset_Time[,"value"])
   write.table(LengthGS, "LengthGS.txt")
   
@@ -690,6 +702,7 @@ PhenoMetrics<- function (RawPath, BolAOI){
   plot(MT$value, main="Max Time")
   writeRaster(MT$value, "Max_T.img", overwrite=TRUE)
   
+
   MV=rasterFromXYZ(Max_Value)
   crs(MV)<-crs(ras)
   plot(MV$value, main="Max_NDVI")
@@ -750,7 +763,19 @@ PhenoMetrics<- function (RawPath, BolAOI){
   plot(As$value, main="Asymmetry")
   writeRaster(As$value, "Asymmetry.img", overwrite=TRUE)
   
-    
+  BefMaxT=rasterFromXYZ(BeforeMaxT)
+  crs(BefMaxT)<-crs(ras)
+  plot(BefMaxT$value, main="BeforeMaxT")
+  writeRaster(BefMaxT$value, "BeforeMaxT.img", overwrite=TRUE)
+  
+  AftMaxT=rasterFromXYZ(AfterMaxT)
+  crs(AftMaxT)<-crs(ras)
+  plot(AftMaxT$value, main="AfterMaxT")
+  writeRaster(AftMaxT$value, "AfterMaxT.img", overwrite=TRUE)
+  
+  
+  
+  
   ##########################====================================##########################
   
   return("*********************Output file saved at working directory*************************")
@@ -782,7 +807,7 @@ PhenoMetrics<- function (RawPath, BolAOI){
 #' 
 #' @seealso PhenoMetrics()
 #' 
-MultiPointsPlot<- function (N,Id1,Id2,Id3,Id4,Id5){
+  MultiPointsPlot<- function (N,Id1,Id2,Id3,Id4,Id5){
   AP=read.table("Allpixels.txt", header=TRUE)
   APP=as.matrix(AP[Id1,])
 

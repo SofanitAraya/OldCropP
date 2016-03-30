@@ -678,7 +678,7 @@ PhenoMetrics<- function (RawPath, BolAOI){
   BeforeMaxT[,"value"]=Max_Time[,"value"]-Onset_Time[,"value"]
   write.table(BeforeMaxT, "BeforeMaxT.txt")
 
-  AterMaxT[,"value"]=Offset_Time[,"value"]-Max_Time[,"value"]
+  AfterMaxT[,"value"]=Offset_Time[,"value"]-Max_Time[,"value"]
   write.table(AfterMaxT, "AfterMaxT.txt")
   
   #BrownDownSlope=Max_Time

@@ -275,7 +275,8 @@ PhenoMetrics<- function (RawPath, BolAOI){
     cordinate[2]=cor[s,2]
     
     #AP=append(ts(list(s)),append(cordinate,AnnualTS))
-    AP=append(ts(s),append(cordinate,AnnualTS))
+    #AP=append(ts(s),append(cordinate,AnnualTS))
+    AP=append(cordinate,AnnualTS)
     #print (AP)
     AllP=rbind(AllP, AP)
     

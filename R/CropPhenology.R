@@ -695,7 +695,7 @@ PhenoMetrics<- function (RawPath, BolAOI){
   par(mfrow=c(2,2))
   
   names(AllP)=Hd
-  write.csv(AllP, "AllPixels.csv")
+  write.csv(AllP, "AllPixels.txt")
 
   MT=rasterFromXYZ(Max_Time)
   crs(MT)<-crs(ras)

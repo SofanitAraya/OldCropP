@@ -812,7 +812,7 @@ PhenoMetrics<- function (RawPath, BolAOI){
 #' 
   MultiPointsPlot<- function (N,Id1,Id2,Id3,Id4,Id5){
     #AP=read.table("Allpixels.txt")
-    AP=read.table("Allpixels.txt", header=TRUE, sep=",", strip.white = TRUE)
+    AP=read.table("AllPixels.txt", header=TRUE, sep=",", strip.white = TRUE)
     APP=as.matrix(AP[Id1,])
     print (APP)
     

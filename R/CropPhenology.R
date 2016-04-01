@@ -477,7 +477,7 @@ PhenoMetrics<- function (RawPath, BolAOI){
     print (trsh1)
     onset=Em
     onsetV=AnnualTS[Em]
-    Onset_Value[,"value"][s]=onsetV*10000
+    Onset_Value[,"value"][s]=onsetV
     Onset_Time[,"value"][s]=onset
     print (s)
     print (r)
@@ -702,48 +702,48 @@ PhenoMetrics<- function (RawPath, BolAOI){
 
   MT=rasterFromXYZ(Max_Time)
   crs(MT)<-crs(ras)
-  plot(MT$value, main="Max Time")
+  plot(MT$value, main="Max_T")
   writeRaster(MT$value, "Max_T.img", overwrite=TRUE)
   
 
   MV=rasterFromXYZ(Max_Value)
   crs(MV)<-crs(ras)
-  plot(MV$value, main="Max_NDVI")
+  plot(MV$value, main="Max_V")
   writeRaster(MV$value, "Max_V.img", overwrite=TRUE)
   
   AT=rasterFromXYZ(Area_Total)
   crs(AT)<-crs(ras)
-  plot(AT$value, main="Total area")
-  writeRaster(AT$value, "Area_Total.img", overwrite=TRUE)
+  plot(AT$value, main="TINDVI")
+  writeRaster(AT$value, "TINDVI.img", overwrite=TRUE)
   
   AA=rasterFromXYZ(Area_After)
   crs(AA)<-crs(ras)
-  plot(AA$value, main="Area After Max")
-  writeRaster(AA$value, "Area_After.img", overwrite=TRUE)
+  plot(AA$value, main="AreaAfterMax")
+  writeRaster(AA$value, "AreaAfterMax.img", overwrite=TRUE)
   
   AB=rasterFromXYZ(Area_Before)
   crs(AB)<-crs(ras)
-  plot(AB$value, main="Area Before Max")
-  writeRaster(AB$value, "Area_Before.img", overwrite=TRUE)
+  plot(AB$value, main="AreaBeforeMax")
+  writeRaster(AB$value, "AreaBeforeMax.img", overwrite=TRUE)
   
   OT=rasterFromXYZ(Onset_Time)
   crs(OT)<-crs(ras)
-  plot(OT$value, main="Onset Time")
+  plot(OT$value, main="Onset_T")
   writeRaster(OT$value, "Onset_T.img", overwrite=TRUE)
   
   OV=rasterFromXYZ(Onset_Value)
   crs(OV)<-crs(ras)
-  plot(OV$value, main="Onset_NDVI")
+  plot(OV$value, main="Onset_V")
   writeRaster(OV$value, "Onset_V.img", overwrite=TRUE)
   
   OFT=rasterFromXYZ(Offset_Time)
   crs(OFT)<-crs(ras)
-  plot(OFT$value, main="Offset Time")
+  plot(OFT$value, main="Offset_T")
   writeRaster(OFT$value, "Offset_T.img", overwrite=TRUE)
   
   OFV=rasterFromXYZ(Offset_Value)
   crs(OFV)<-crs(ras)
-  plot(OFV$value, main="Offset_NDVI")
+  plot(OFV$value, main="Offset_V")
   writeRaster(OFV$value, "Offset_V.img", overwrite=TRUE)
   
   GUS=rasterFromXYZ(GreenUpSlope)
@@ -759,7 +759,7 @@ PhenoMetrics<- function (RawPath, BolAOI){
   Len=rasterFromXYZ(LengthGS)
   crs(Len)<-crs(ras)
   writeRaster(Len$value, "LengthGS.img", overwrite=TRUE)
-  plot(Len$value, main="GS Length")
+  plot(Len$value, main="LengthGS")
   
   As=rasterFromXYZ(Asymmetry)
   crs(As)<-crs(ras)
@@ -843,7 +843,7 @@ PhenoMetrics<- function (RawPath, BolAOI){
     
     
     
-      if ((Id1>length(APP))){
+      if ((Id1>length(AP))){
         stop ('Id out of range')
       }
       
@@ -861,7 +861,7 @@ PhenoMetrics<- function (RawPath, BolAOI){
       }
     
  
-      if ((Id1>length(APP)) || (Id2>length(APP))){
+      if ((Id1>length(AP)) || (Id2>length(AP))){
         stop ('Id out of range')
       }
     
@@ -878,7 +878,7 @@ PhenoMetrics<- function (RawPath, BolAOI){
       }
     
     
-      if ((Id1>length(APP)) || (Id2>length(APP)) || (Id3>length(APP))){
+      if ((Id1>length(AP)) || (Id2>length(AP)) || (Id3>length(AP))){
         stop ('Id out of range')
       }
     
@@ -896,7 +896,7 @@ PhenoMetrics<- function (RawPath, BolAOI){
       }
     
     
-      if ((Id1>length(APP)) || (Id2>length(APP)) || (Id3>length(APP)) || (Id4>length(APP))){
+      if ((Id1>length(AP)) || (Id2>length(AP)) || (Id3>length(AP)) || (Id4>length(AP))){
         stop ('Id out of range')
       }
     
@@ -913,7 +913,7 @@ PhenoMetrics<- function (RawPath, BolAOI){
       }
     
     
-      if ((Id1>length(APP)) || (Id2>length(APP)) || (Id3>length(APP)) || (Id4>length(APP)) || (Id5>length(APP)) ){
+      if ((Id1>length(AP)) || (Id2>length(AP)) || (Id3>length(AP)) || (Id4>length(AP)) || (Id5>length(AP)) ){
         stop ('Id out of range')
       }
     

@@ -810,114 +810,114 @@ PhenoMetrics<- function (RawPath, BolAOI){
 #' 
 #' @seealso PhenoMetrics()
 #' 
-  MultiPointsPlot<- function (N,Id1,Id2,Id3,Id4,Id5){
-    #AP=read.table("Allpixels.txt")
-    AP=read.table("AllPixels.txt", header=TRUE, sep=",", strip.white = TRUE)
-    APP=as.matrix(AP[Id1,])
-    print (APP)
-    
+MultiPointsPlot<- function (N,Id1,Id2,Id3,Id4,Id5){
+  #AP=read.table("Allpixels.txt")
+  AP=read.table("AllPixels.txt", header=TRUE, sep=",", strip.white = TRUE)
+  APP=as.matrix(AP[Id1,])
+  print (APP)
+  
 
-    if (N>5){
-      warning ('The maximum No of pixel to plot is 5')
-    
-    
-      if ((is.numeric(Id1)==FALSE) || (is.numeric(Id2)==FALSE) || (is.numeric(Id3)==FALSE) || (is.numeric(Id4)==FALSE) || (is.numeric(Id5)==FALSE) ){
-        stop ('ID should be numeric')
-      }
-    
+  if (N>5){
+    warning ('The maximum No of pixel to plot is 5')
+  
+  
+    if ((is.numeric(Id1)==FALSE) || (is.numeric(Id2)==FALSE) || (is.numeric(Id3)==FALSE) || (is.numeric(Id4)==FALSE) || (is.numeric(Id5)==FALSE) ){
+      stop ('ID should be numeric')
+    }
+  
 
-      if (missing (Id1) | missing(Id2) | missing (Id3) | missing (Id4) | missing (Id5)){
-        stop('Id missed')
-      }
-      ts.plot((ts(as.matrix(AP[Id1,])[4:length(APP)])), (ts(as.matrix(AP[Id2,])[4:length(APP)])), (ts(as.matrix(AP[Id3,])[4:length(APP)])), (ts(as.matrix(AP[Id4,])[4:length(APP)])), (ts(as.matrix(AP[Id5,])[4:length(APP)])), col=1:5)
+    if (missing (Id1) | missing(Id2) | missing (Id3) | missing (Id4) | missing (Id5)){
+      stop('Id missed')
     }
-    
-    
-    if (N==1){
-      warning('only one pixel ploted')
-    
-    
-      if ((is.numeric(Id1)==FALSE) ){
-        stop ('ID should be numeric')
-      }
-    
-    
-    
-      if ((Id1>length(AP))){
-        stop ('Id out of range')
-      }
-      
-      ts.plot ((ts(as.matrix(AP[Id1,])[4:length(APP)])))
-    }
-    
-    if (N==2){
-      if (missing (Id1) || missing(Id2)){
-        stop('Id missed')
-      }
-    
-    
-      if ((is.numeric(Id1)==FALSE) || (is.numeric(Id2)==FALSE) ){
-        stop ('ID should be numeric')
-      }
-    
- 
-      if ((Id1>length(AP)) || (Id2>length(AP))){
-        stop ('Id out of range')
-      }
-    
-      ts.plot ((ts(as.matrix(AP[Id1,])[4:length(APP)])), (ts(as.matrix(AP[Id2,])[4:length(APP)])), col=1:2)
-    }
-    if (N==3){
-      if ((missing (Id1)) || (missing(Id2)) || (missing (Id3))){
-        stop ("Id missed")
-      }
-
-    
-      if ((is.numeric(Id1)==FALSE) || (is.numeric(Id2)==FALSE) || (is.numeric(Id3)==FALSE) ){
-        stop ('ID should be numeric')
-      }
-    
-    
-      if ((Id1>length(AP)) || (Id2>length(AP)) || (Id3>length(AP))){
-        stop ('Id out of range')
-      }
-    
-      ts.plot ((ts(as.matrix(AP[Id1,])[4:length(APP)])), (ts(as.matrix(AP[Id2,])[4:length(APP)])), (ts(as.matrix(AP[Id3,])[4:length(APP)])), col=1:3)
-    }
-     
-    if (N==4){
-      if (missing (Id1) || missing(Id2) || missing (Id3) || missing (Id4)){
-        stop('Id missed')
-      }
-    
-    
-      if ((is.numeric(Id1)==FALSE) || (is.numeric(Id2)==FALSE) || (is.numeric(Id3)==FALSE) || (is.numeric(Id4)==FALSE) ){
-        stop ('ID should be numeric')
-      }
-    
-    
-      if ((Id1>length(AP)) || (Id2>length(AP)) || (Id3>length(AP)) || (Id4>length(AP))){
-        stop ('Id out of range')
-      }
-    
-      ts.plot ((ts(as.matrix(AP[Id1,])[4:length(APP)])), (ts(as.matrix(AP[Id2,])[4:length(APP)])), (ts(as.matrix(AP[Id3,])[4:length(APP)])), (ts(as.matrix(AP[Id4,])[4:length(APP)])), col=1:4)
-    }
-    if (N==5){
-      if (missing (Id1) || missing(Id2) || missing (Id3) || missing (Id4) || missing (Id5)){
-        stop('Id missed')
-      }
-
-    
-      if ((is.numeric(Id1)==FALSE) || (is.numeric(Id2)==FALSE) || (is.numeric(Id3)==FALSE) || (is.numeric(Id4)==FALSE) || (is.numeric(Id5)==FALSE) ){
-        stop ('ID should be numeric')
-      }
-    
-    
-      if ((Id1>length(AP)) || (Id2>length(AP)) || (Id3>length(AP)) || (Id4>length(AP)) || (Id5>length(AP)) ){
-        stop ('Id out of range')
-      }
-    
-      ts.plot ((ts(as.matrix(AP[Id1,])[4:length(APP)])), (ts(as.matrix(AP[Id2,])[4:length(APP)])), (ts(as.matrix(AP[Id3,])[4:length(APP)])), (ts(as.matrix(AP[Id4,])[4:length(APP)])), (ts(as.matrix(AP[Id5,])[4:length(APP)])), col=1:5)
-    }
-    return ("..........Curves ploted............................")
+    ts.plot((ts(as.matrix(AP[Id1,])[4:length(APP)])), (ts(as.matrix(AP[Id2,])[4:length(APP)])), (ts(as.matrix(AP[Id3,])[4:length(APP)])), (ts(as.matrix(AP[Id4,])[4:length(APP)])), (ts(as.matrix(AP[Id5,])[4:length(APP)])), col=1:5)
   }
+  
+  
+  if (N==1){
+    warning('only one pixel ploted')
+  
+  
+    if ((is.numeric(Id1)==FALSE) ){
+      stop ('ID should be numeric')
+    }
+  
+  
+  
+    if ((Id1>length(AP$T1))){
+      stop ('Id out of range')
+    }
+    
+    ts.plot ((ts(as.matrix(AP[Id1,])[4:length(APP)])))
+  }
+  
+  if (N==2){
+    if (missing (Id1) || missing(Id2)){
+      stop('Id missed')
+    }
+  
+  
+    if ((is.numeric(Id1)==FALSE) || (is.numeric(Id2)==FALSE) ){
+      stop ('ID should be numeric')
+    }
+  
+
+    if ((Id1>length(AP$T1)) || (Id2>length(AP$T1))){
+      stop ('Id out of range')
+    }
+  
+    ts.plot ((ts(as.matrix(AP[Id1,])[4:length(APP)])), (ts(as.matrix(AP[Id2,])[4:length(APP)])), col=1:2)
+  }
+  if (N==3){
+    if ((missing (Id1)) || (missing(Id2)) || (missing (Id3))){
+      stop ("Id missed")
+    }
+
+  
+    if ((is.numeric(Id1)==FALSE) || (is.numeric(Id2)==FALSE) || (is.numeric(Id3)==FALSE) ){
+      stop ('ID should be numeric')
+    }
+  
+  
+    if ((Id1>length(AP$T1)) || (Id2>length(AP$T1)) || (Id3>length(AP$T1))){
+      stop ('Id out of range')
+    }
+  
+    ts.plot ((ts(as.matrix(AP[Id1,])[4:length(APP)])), (ts(as.matrix(AP[Id2,])[4:length(APP)])), (ts(as.matrix(AP[Id3,])[4:length(APP)])), col=1:3)
+  }
+   
+  if (N==4){
+    if (missing (Id1) || missing(Id2) || missing (Id3) || missing (Id4)){
+      stop('Id missed')
+    }
+  
+  
+    if ((is.numeric(Id1)==FALSE) || (is.numeric(Id2)==FALSE) || (is.numeric(Id3)==FALSE) || (is.numeric(Id4)==FALSE) ){
+      stop ('ID should be numeric')
+    }
+  
+  
+    if ((Id1>length(AP$T1)) || (Id2>length(AP$T1)) || (Id3>length(AP$T1)) || (Id4>length(AP$T1))){
+      stop ('Id out of range')
+    }
+  
+    ts.plot ((ts(as.matrix(AP[Id1,])[4:length(APP)])), (ts(as.matrix(AP[Id2,])[4:length(APP)])), (ts(as.matrix(AP[Id3,])[4:length(APP)])), (ts(as.matrix(AP[Id4,])[4:length(APP)])), col=1:4)
+  }
+  if (N==5){
+    if (missing (Id1) || missing(Id2) || missing (Id3) || missing (Id4) || missing (Id5)){
+      stop('Id missed')
+    }
+
+  
+    if ((is.numeric(Id1)==FALSE) || (is.numeric(Id2)==FALSE) || (is.numeric(Id3)==FALSE) || (is.numeric(Id4)==FALSE) || (is.numeric(Id5)==FALSE) ){
+      stop ('ID should be numeric')
+    }
+  
+  
+    if ((Id1>length(AP$T1)) || (Id2>length(AP$T1)) || (Id3>length(AP$T1)) || (Id4>length(AP$T1)) || (Id5>length(AP$T1)) ){
+      stop ('Id out of range')
+    }
+  
+    ts.plot ((ts(as.matrix(AP[Id1,])[4:length(APP)])), (ts(as.matrix(AP[Id2,])[4:length(APP)])), (ts(as.matrix(AP[Id3,])[4:length(APP)])), (ts(as.matrix(AP[Id4,])[4:length(APP)])), (ts(as.matrix(AP[Id5,])[4:length(APP)])), col=1:5)
+  }
+  return ("..........Curves ploted............................")
+}

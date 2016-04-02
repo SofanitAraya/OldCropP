@@ -687,7 +687,12 @@ PhenoMetrics<- function (RawPath, BolAOI){
   #BrownDownSlope=Max_Time
   BrownDownSlope[,"value"]=(Max_Value[,"value"]-Offset_Value[,"value"])/(Offset_Time[,"value"]-Max_Time[,"value"])
   write.table(BrownDownSlope, "BrownDownSlope.txt")
-  
+
+  #GreenUpSlope=Max_Time
+  GreenUpSlope[,"value"]=(Max_Value[,"value"]-Onset_Value[,"value"])/(Max_Time[,"value"]-Onset_Time[,"value"])
+  write.table(GreenUpSlope, "GreenUpSlope.txt")
+
+
   #LengthGS=Max_Time
   LengthGS[,"value"]=(Offset_Time[,"value"]-Onset_Time[,"value"])
   write.table(LengthGS, "LengthGS.txt")
@@ -815,7 +820,7 @@ MultiPointsPlot<- function (N,Id1,Id2,Id3,Id4,Id5){
   AP=read.table("AllPixels.txt", header=TRUE, sep=",", strip.white = TRUE)
   APP=as.matrix(AP[Id1,])
   print (APP)
-  
+  par(mfrow=c(1,1))
 
   if (N>5){
     warning ('The maximum No of pixel to plot is 5')

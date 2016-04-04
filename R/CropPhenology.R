@@ -716,9 +716,9 @@ PhenoMetrics<- function (RawPath, BolAOI){
 
   MV=rasterFromXYZ(Max_Value)
   crs(MV)<-crs(ras)
-  brk=seq(0,1, by=0.001)
+  brk=seq(0.2,1, by=0.001)
   nbrk=length(brk)
-  plot(MV$value, main="Max_V", breaks=brk, col=rev(terrain.colors(nbrk)), axis.arg=list(at=seq(0,1,by=0.2), labels=seq(0,1,by=0.2)), zlim=c(0,1))
+  plot(MV$value, main="Max_V", breaks=brk, col=rev(terrain.colors(nbrk)), axis.arg=list(at=seq(0.2,1,by=0.2), labels=seq(0.2,1,by=0.2)), zlim=c(0.2,1))
   writeRaster(MV$value, "Max_V.img", overwrite=TRUE)
   
   AT=rasterFromXYZ(Area_Total)
@@ -730,16 +730,16 @@ PhenoMetrics<- function (RawPath, BolAOI){
   
   AA=rasterFromXYZ(Area_After)
   crs(AA)<-crs(ras)
-  brk=seq(0,8, by=0.001)
+  brk=seq(0,6, by=0.0001)
   nbrk=length(brk)
-  plot(AA$value, main="TINDVIAfterMax", breaks=brk, col=rev(terrain.colors(nbrk)), axis.arg=list(at=seq(0,8,by=2), labels=seq(0,8,by=2)), zlim=c(0,8))
+  plot(AA$value, main="TINDVIAfterMax", breaks=brk, col=rev(terrain.colors(nbrk)), axis.arg=list(at=seq(0,6,by=2), labels=seq(0,6,by=2)), zlim=c(0,6))
   writeRaster(AA$value, "TINDVIAfterMax.img", overwrite=TRUE)
   
   AB=rasterFromXYZ(Area_Before)
   crs(AB)<-crs(ras)
-  brk=seq(0,8, by=0.001)
+  brk=seq(0,6, by=0.0001)
   nbrk=length(brk)
-  plot(AB$value, main="TINDVIBeforeMax", breaks=brk, col=rev(terrain.colors(nbrk)), axis.arg=list(at=seq(0,8,by=2), labels=seq(0,8,by=2)), zlim=c(0,8))
+  plot(AB$value, main="TINDVIBeforeMax", breaks=brk, col=rev(terrain.colors(nbrk)), axis.arg=list(at=seq(0,6,by=2), labels=seq(0,6,by=2)), zlim=c(0,6))
   writeRaster(AB$value, "TINDVIBeforeMax.img", overwrite=TRUE)
   
   OT=rasterFromXYZ(Onset_Time)
@@ -750,10 +750,10 @@ PhenoMetrics<- function (RawPath, BolAOI){
   writeRaster(OT$value, "Onset_T.img", overwrite=TRUE)
   
   OV=rasterFromXYZ(Onset_Value)
-  brk=seq(0,0.3, by=0.001)
+  brk=seq(0.1,0.4, by=0.001)
   nbrk=length(brk)
   crs(OV)<-crs(ras)
-  plot(OV$value, main="Onset_V", breaks=brk, col=rev(terrain.colors(nbrk)), axis.arg=list(at=seq(0,0.3,by=0.1), labels=seq(0,0.3,by=0.1)), zlim=c(0,0.3))
+  plot(OV$value, main="Onset_V", breaks=brk, col=rev(terrain.colors(nbrk)), axis.arg=list(at=seq(0.1,0.4,by=0.1), labels=seq(0.1,0.4,by=0.1)), zlim=c(0.1,0.4))
   writeRaster(OV$value, "Onset_V.img", overwrite=TRUE)
   
   OFT=rasterFromXYZ(Offset_Time)
@@ -765,23 +765,23 @@ PhenoMetrics<- function (RawPath, BolAOI){
   
   OFV=rasterFromXYZ(Offset_Value)
   crs(OFV)<-crs(ras)
-  brk=seq(0,0.3, by=0.001)
+  brk=seq(0.1,0.4, by=0.001)
   nbrk=length(brk)
-  plot(OFV$value, main="Offset_V", breaks=brk, col=rev(terrain.colors(nbrk)), axis.arg=list(at=seq(0,0.3,by=0.1), labels=seq(0,0.3,by=0.1)), zlim=c(0,0.3))
+  plot(OFV$value, main="Offset_V", breaks=brk, col=rev(terrain.colors(nbrk)), axis.arg=list(at=seq(0.1,0.4,by=0.1), labels=seq(0.1,0.4,by=0.1)), zlim=c(0.1,0.4))
   writeRaster(OFV$value, "Offset_V.img", overwrite=TRUE)
   
   GUS=rasterFromXYZ(GreenUpSlope)
   crs(GUS)<-crs(ras)
-  brk=seq(0,0.1, by=0.00001)
+  brk=seq(0,0.2, by=0.00001)
   nbrk=length(brk)
-  plot(GUS$value, main="GreenUpSlope", breaks=brk, col=rev(terrain.colors(nbrk)), axis.arg=list(at=seq(0,0.1,by=0.02), labels=seq(0,0.1,by=0.02)),zlim=c(0,0.1))
+  plot(GUS$value, main="GreenUpSlope", breaks=brk, col=rev(terrain.colors(nbrk)), axis.arg=list(at=seq(0,0.2,by=0.02), labels=seq(0,0.2,by=0.02)),zlim=c(0,0.2))
   writeRaster(GUS$value, "GreenUpSlope.img", overwrite=TRUE)
   
   BDS=rasterFromXYZ(BrownDownSlope)
   crs(BDS)<-crs(ras)
-  brk=seq(0,0.1, by=0.00001)
+  brk=seq(0,0.2, by=0.00001)
   nbrk=length(brk)
-  plot(BDS$value, main="BrownDownSlope", breaks=brk, col=rev(terrain.colors(nbrk)), axis.arg=list(at=seq(0,0.1,by=0.02), labels=seq(0,0.1,by=0.02)),zlim=c(0,0.1))
+  plot(BDS$value, main="BrownDownSlope", breaks=brk, col=rev(terrain.colors(nbrk)), axis.arg=list(at=seq(0,0.2,by=0.02), labels=seq(0,0.2,by=0.02)),zlim=c(0,0.2))
   writeRaster(BDS$value, "BrownDownSlope.img", overwrite=TRUE)
   
   Len=rasterFromXYZ(LengthGS)

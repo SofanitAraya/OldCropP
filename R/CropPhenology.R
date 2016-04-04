@@ -705,6 +705,21 @@ PhenoMetrics<- function (RawPath, BolAOI){
   names(AllP)=Hd
   write.csv(AllP, "AllPixels.txt")
 
+
+  OT=rasterFromXYZ(Onset_Time)
+  crs(OT)<-crs(ras)
+  brk=seq(7,12, by=0.01)
+  nbrk=length(brk)
+  plot(OT$value, main="Onset_T", breaks=brk, col=rev(terrain.colors(nbrk)), axis.arg=list(at=seq(7,12,by=1), labels=seq(7,12,by=1)), zlim=c(7,12))
+  writeRaster(OT$value, "Onset_T.img", overwrite=TRUE)
+  
+  OV=rasterFromXYZ(Onset_Value)
+  brk=seq(0.1,0.4, by=0.001)
+  nbrk=length(brk)
+  crs(OV)<-crs(ras)
+  plot(OV$value, main="Onset_V", breaks=brk, col=rev(terrain.colors(nbrk)), axis.arg=list(at=seq(0.1,0.4,by=0.1), labels=seq(0.1,0.4,by=0.1)), zlim=c(0.1,0.4))
+  writeRaster(OV$value, "Onset_V.img", overwrite=TRUE)
+
   MT=rasterFromXYZ(Max_Time)
   crs(MT)<-crs(ras)
   brk=seq(8,19, by=1)
@@ -721,41 +736,6 @@ PhenoMetrics<- function (RawPath, BolAOI){
   plot(MV$value, main="Max_V", breaks=brk, col=rev(terrain.colors(nbrk)), axis.arg=list(at=seq(0.2,1,by=0.2), labels=seq(0.2,1,by=0.2)), zlim=c(0.2,1))
   writeRaster(MV$value, "Max_V.img", overwrite=TRUE)
   
-  AT=rasterFromXYZ(Area_Total)
-  crs(AT)<-crs(ras)
-  brk=seq(0,8, by=0.001)
-  nbrk=length(brk)
-  plot(AT$value, main="TINDVI", breaks=brk, col=rev(terrain.colors(nbrk)), axis.arg=list(at=seq(0,8,by=2), labels=seq(0,8,by=2)), zlim=c(0,8))
-  writeRaster(AT$value, "TINDVI.img", overwrite=TRUE)
-  
-  AA=rasterFromXYZ(Area_After)
-  crs(AA)<-crs(ras)
-  brk=seq(0,6, by=0.0001)
-  nbrk=length(brk)
-  plot(AA$value, main="TINDVIAfterMax", breaks=brk, col=rev(terrain.colors(nbrk)), axis.arg=list(at=seq(0,6,by=2), labels=seq(0,6,by=2)), zlim=c(0,6))
-  writeRaster(AA$value, "TINDVIAfterMax.img", overwrite=TRUE)
-  
-  AB=rasterFromXYZ(Area_Before)
-  crs(AB)<-crs(ras)
-  brk=seq(0,6, by=0.0001)
-  nbrk=length(brk)
-  plot(AB$value, main="TINDVIBeforeMax", breaks=brk, col=rev(terrain.colors(nbrk)), axis.arg=list(at=seq(0,6,by=2), labels=seq(0,6,by=2)), zlim=c(0,6))
-  writeRaster(AB$value, "TINDVIBeforeMax.img", overwrite=TRUE)
-  
-  OT=rasterFromXYZ(Onset_Time)
-  crs(OT)<-crs(ras)
-  brk=seq(7,12, by=0.01)
-  nbrk=length(brk)
-  plot(OT$value, main="Onset_T", breaks=brk, col=rev(terrain.colors(nbrk)), axis.arg=list(at=seq(7,12,by=1), labels=seq(7,12,by=1)), zlim=c(7,12))
-  writeRaster(OT$value, "Onset_T.img", overwrite=TRUE)
-  
-  OV=rasterFromXYZ(Onset_Value)
-  brk=seq(0.1,0.4, by=0.001)
-  nbrk=length(brk)
-  crs(OV)<-crs(ras)
-  plot(OV$value, main="Onset_V", breaks=brk, col=rev(terrain.colors(nbrk)), axis.arg=list(at=seq(0.1,0.4,by=0.1), labels=seq(0.1,0.4,by=0.1)), zlim=c(0.1,0.4))
-  writeRaster(OV$value, "Onset_V.img", overwrite=TRUE)
-  
   OFT=rasterFromXYZ(Offset_Time)
   crs(OFT)<-crs(ras)
   brk=seq(17,23, by=0.01)
@@ -769,34 +749,20 @@ PhenoMetrics<- function (RawPath, BolAOI){
   nbrk=length(brk)
   plot(OFV$value, main="Offset_V", breaks=brk, col=rev(terrain.colors(nbrk)), axis.arg=list(at=seq(0.1,0.4,by=0.1), labels=seq(0.1,0.4,by=0.1)), zlim=c(0.1,0.4))
   writeRaster(OFV$value, "Offset_V.img", overwrite=TRUE)
-  
+
   GUS=rasterFromXYZ(GreenUpSlope)
   crs(GUS)<-crs(ras)
-  brk=seq(0,0.2, by=0.00001)
+  brk=seq(0,0.3, by=0.00001)
   nbrk=length(brk)
-  plot(GUS$value, main="GreenUpSlope", breaks=brk, col=rev(terrain.colors(nbrk)), axis.arg=list(at=seq(0,0.2,by=0.02), labels=seq(0,0.2,by=0.02)),zlim=c(0,0.2))
+  plot(GUS$value, main="GreenUpSlope", breaks=brk, col=rev(terrain.colors(nbrk)), axis.arg=list(at=seq(0,0.3,by=0.05), labels=seq(0,0.3,by=0.05)),zlim=c(0,0.3))
   writeRaster(GUS$value, "GreenUpSlope.img", overwrite=TRUE)
   
   BDS=rasterFromXYZ(BrownDownSlope)
   crs(BDS)<-crs(ras)
-  brk=seq(0,0.2, by=0.00001)
+  brk=seq(0,0.3, by=0.00001)
   nbrk=length(brk)
-  plot(BDS$value, main="BrownDownSlope", breaks=brk, col=rev(terrain.colors(nbrk)), axis.arg=list(at=seq(0,0.2,by=0.02), labels=seq(0,0.2,by=0.02)),zlim=c(0,0.2))
+  plot(BDS$value, main="BrownDownSlope", breaks=brk, col=rev(terrain.colors(nbrk)), axis.arg=list(at=seq(0,0.3,by=0.05), labels=seq(0,0.3,by=0.05)),zlim=c(0,0.3))
   writeRaster(BDS$value, "BrownDownSlope.img", overwrite=TRUE)
-  
-  Len=rasterFromXYZ(LengthGS)
-  crs(Len)<-crs(ras)
-  brk=seq(7,15, by=0.1)
-  nbrk=length(brk)
-  writeRaster(Len$value, "LengthGS.img", overwrite=TRUE)
-  plot(Len$value, main="LengthGS", breaks=brk, col=rev(terrain.colors(nbrk)), axis.arg=list(at=seq(7,15,by=2), labels=seq(7,15,by=2)), zlim=c(7,15))
-  
-  As=rasterFromXYZ(Asymmetry)
-  crs(As)<-crs(ras)
-  brk=seq(-2,2, by=0.0001)
-  nbrk=length(brk)
-  plot(As$value, main="Asymmetry", breaks=brk, col=rev(terrain.colors(nbrk)), axis.arg=list(at=seq(-2,2,by=1), labels=seq(-2,2,by=1)), zlim=c(-2,2))
-  writeRaster(As$value, "Asymmetry.img", overwrite=TRUE)
   
   BefMaxT=rasterFromXYZ(BeforeMaxT)
   crs(BefMaxT)<-crs(ras)
@@ -811,8 +777,45 @@ PhenoMetrics<- function (RawPath, BolAOI){
   nbrk=length(brk)
   plot(AftMaxT$value, main="AfterMaxT", breaks=brk, col=rev(terrain.colors(nbrk)), axis.arg=list(at=seq(1,12,by=2), labels=seq(1,12,by=2)), zlim=c(1,12))
   writeRaster(AftMaxT$value, "AfterMaxT.img", overwrite=TRUE)
+
+  Len=rasterFromXYZ(LengthGS)
+  crs(Len)<-crs(ras)
+  brk=seq(7,15, by=0.1)
+  nbrk=length(brk)
+  writeRaster(Len$value, "LengthGS.img", overwrite=TRUE)
+  plot(Len$value, main="LengthGS", breaks=brk, col=rev(terrain.colors(nbrk)), axis.arg=list(at=seq(7,15,by=2), labels=seq(7,15,by=2)), zlim=c(7,15))
+
+  AA=rasterFromXYZ(Area_After)
+  crs(AA)<-crs(ras)
+  brk=seq(0,8, by=0.0001)
+  nbrk=length(brk)
+  plot(AA$value, main="TINDVIAfterMax", breaks=brk, col=rev(terrain.colors(nbrk)), axis.arg=list(at=seq(0,8,by=2), labels=seq(0,8,by=2)), zlim=c(0,8))
+  writeRaster(AA$value, "TINDVIAfterMax.img", overwrite=TRUE)
   
+  AB=rasterFromXYZ(Area_Before)
+  crs(AB)<-crs(ras)
+  brk=seq(0,8, by=0.0001)
+  nbrk=length(brk)
+  plot(AB$value, main="TINDVIBeforeMax", breaks=brk, col=rev(terrain.colors(nbrk)), axis.arg=list(at=seq(0,8,by=2), labels=seq(0,8,by=2)), zlim=c(0,8))
+  writeRaster(AB$value, "TINDVIBeforeMax.img", overwrite=TRUE)
+
+
+  AT=rasterFromXYZ(Area_Total)
+  crs(AT)<-crs(ras)
+  brk=seq(0,8, by=0.001)
+  nbrk=length(brk)
+  plot(AT$value, main="TINDVI", breaks=brk, col=rev(terrain.colors(nbrk)), axis.arg=list(at=seq(0,8,by=2), labels=seq(0,8,by=2)), zlim=c(0,8))
+  writeRaster(AT$value, "TINDVI.img", overwrite=TRUE)
+
+
+  As=rasterFromXYZ(Asymmetry)
+  crs(As)<-crs(ras)
+  brk=seq(-5,5, by=0.0001)
+  nbrk=length(brk)
+  plot(As$value, main="Asymmetry", breaks=brk, col=rev(terrain.colors(nbrk)), axis.arg=list(at=seq(-5,5,by=1), labels=seq(-5,5,by=1)), zlim=c(-5,5))
+  writeRaster(As$value, "Asymmetry.img", overwrite=TRUE)
   
+
   
   
   ##########################====================================##########################

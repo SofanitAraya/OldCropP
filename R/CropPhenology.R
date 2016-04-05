@@ -869,8 +869,8 @@ MultiPointsPlot<- function (N,Id1,Id2,Id3,Id4,Id5){
     if (missing (Id1) | missing(Id2) | missing (Id3) | missing (Id4) | missing (Id5)){
       stop('Id missed')
     }
-    ts.plot((ts(as.matrix(AP[Id1,])[4:length(APP)])), (ts(as.matrix(AP[Id2,])[4:length(APP)])), (ts(as.matrix(AP[Id3,])[4:length(APP)])), (ts(as.matrix(AP[Id4,])[4:length(APP)])), (ts(as.matrix(AP[Id5,])[4:length(APP)])), yaxt="n", col=1:5)
-    axis(2,  ylim=c(0,1), at=seq(0,1,by=0.1))
+    ts.plot((ts(as.matrix(AP[Id1,])[4:length(APP)])), (ts(as.matrix(AP[Id2,])[4:length(APP)])), (ts(as.matrix(AP[Id3,])[4:length(APP)])), (ts(as.matrix(AP[Id4,])[4:length(APP)])), (ts(as.matrix(AP[Id5,])[4:length(APP)])),  ylim=c(0,1), , col=1:5)
+    axis(2, at=seq(0,1,by=0.1))
     
   }
   
@@ -889,8 +889,8 @@ MultiPointsPlot<- function (N,Id1,Id2,Id3,Id4,Id5){
       stop ('Id out of range')
     }
     
-    ts.plot ((ts(as.matrix(AP[Id1,])[4:length(APP)])), yaxt="n")
-    axis(2,  ylim=c(0,1), at=seq(0,1,by=0.1))
+    ts.plot ((ts(as.matrix(AP[Id1,])[4:length(APP)])), ylim=c(0,1))
+    axis(2, at=seq(0,1,by=0.1))
   }
   
   if (N==2){
@@ -908,8 +908,8 @@ MultiPointsPlot<- function (N,Id1,Id2,Id3,Id4,Id5){
       stop ('Id out of range')
     }
   
-    ts.plot ((ts(as.matrix(AP[Id1,])[4:length(APP)])), (ts(as.matrix(AP[Id2,])[4:length(APP)])), yaxt="n", col=1:2)
-    axis(2,  ylim=c(0,1), at=seq(0,1,by=0.1))
+    ts.plot ((ts(as.matrix(AP[Id1,])[4:length(APP)])), (ts(as.matrix(AP[Id2,])[4:length(APP)])), ylim=c(0,1), col=1:2)
+    axis(2,  at=seq(0,1,by=0.1))
   }
   if (N==3){
     if ((missing (Id1)) || (missing(Id2)) || (missing (Id3))){
@@ -926,7 +926,8 @@ MultiPointsPlot<- function (N,Id1,Id2,Id3,Id4,Id5){
       stop ('Id out of range')
     }
   
-    ts.plot ((ts(as.matrix(AP[Id1,])[4:length(APP)])), (ts(as.matrix(AP[Id2,])[4:length(APP)])), (ts(as.matrix(AP[Id3,])[4:length(APP)])), yaxt="n", col=1:3)
+    ts.plot ((ts(as.matrix(AP[Id1,])[4:length(APP)])), (ts(as.matrix(AP[Id2,])[4:length(APP)])), (ts(as.matrix(AP[Id3,])[4:length(APP)])), ylim=c(0,1), col=1:3)
+    axis(2,  at=seq(0,1,by=0.1))
   }
    
   if (N==4){
@@ -944,8 +945,8 @@ MultiPointsPlot<- function (N,Id1,Id2,Id3,Id4,Id5){
       stop ('Id out of range')
     }
   
-    ts.plot ((ts(as.matrix(AP[Id1,])[4:length(APP)])), (ts(as.matrix(AP[Id2,])[4:length(APP)])), (ts(as.matrix(AP[Id3,])[4:length(APP)])), (ts(as.matrix(AP[Id4,])[4:length(APP)])), yaxt="n", col=1:4)
-    axis(2,  ylim=c(0,1), at=seq(0,1,by=0.1))
+    ts.plot ((ts(as.matrix(AP[Id1,])[4:length(APP)])), (ts(as.matrix(AP[Id2,])[4:length(APP)])), (ts(as.matrix(AP[Id3,])[4:length(APP)])), (ts(as.matrix(AP[Id4,])[4:length(APP)])),  ylim=c(0,1), col=1:4)
+    axis(2, at=seq(0,1,by=0.1))
   }
   if (N==5){
     if (missing (Id1) || missing(Id2) || missing (Id3) || missing (Id4) || missing (Id5)){
@@ -962,8 +963,8 @@ MultiPointsPlot<- function (N,Id1,Id2,Id3,Id4,Id5){
       stop ('Id out of range')
     }
   
-    ts.plot ((ts(as.matrix(AP[Id1,])[4:length(APP)])), (ts(as.matrix(AP[Id2,])[4:length(APP)])), (ts(as.matrix(AP[Id3,])[4:length(APP)])), (ts(as.matrix(AP[Id4,])[4:length(APP)])), (ts(as.matrix(AP[Id5,])[4:length(APP)])), yaxt="n", col=1:5)
-    axis(2,  ylim=c(0,1), at=seq(0,1,by=0.1))
+    ts.plot ((ts(as.matrix(AP[Id1,])[4:length(APP)])), (ts(as.matrix(AP[Id2,])[4:length(APP)])), (ts(as.matrix(AP[Id3,])[4:length(APP)])), (ts(as.matrix(AP[Id4,])[4:length(APP)])), (ts(as.matrix(AP[Id5,])[4:length(APP)])), ylim=c(0,1),  col=1:5)
+    axis(2, at=seq(0,1,by=0.1))
   }
   return ("..........Curves ploted............................")
 }

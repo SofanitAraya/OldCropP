@@ -487,7 +487,9 @@ PhenoMetrics<- function (RawPath, BolAOI){
     onset=Em
     onsetV=AnnualTS[Em]
     
-    if (onset>Max_T){ onset=7}
+    print (Max_T)
+    
+    if (onset > Max_T){ onset=7 }
     
     Onset_Value[,"value"][s]=onsetV
     Onset_Time[,"value"][s]=onset

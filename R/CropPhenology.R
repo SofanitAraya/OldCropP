@@ -286,16 +286,24 @@ PhenoMetrics<- function (RawPath, BolAOI){
     #write(append(s,append(cordinate,AnnualTS)), file="AllPixels.txt", append=TRUE, ncolumns=(length(AnnualTS)+3))
     ts.plot(AnnualTS)
     
-    #s=s+1
-    #AnnualTS is the time series of all the pixels
-    #======================================
-    
-    
     #+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-    #                                                  Onset 
+    #                                                  Maximum
     #+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    qmax=1
+    max=AnnualTS[qmax]
+    Max_T=qmax
     
-    # successive slops b/n  points
+    while (qmax>0 & qmax<FileLen){
+      if ((AnnualTS[qmax]) > max){
+        max=AnnualTS[qmax]
+        #print (max)
+        Max_T=qmax
+      }
+      qmax=qmax+1
+    }
+    Max_Value[,"value"][s]=max
+    Max_Time[,"value"][s]=Max_T    
+  
     
     #+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     #                                                  Onset 
@@ -478,6 +486,9 @@ PhenoMetrics<- function (RawPath, BolAOI){
     print (trsh1)
     onset=Em
     onsetV=AnnualTS[Em]
+    
+    if (onset>Max_T){ onset=7}
+    
     Onset_Value[,"value"][s]=onsetV
     Onset_Time[,"value"][s]=onset
     print (s)
@@ -515,7 +526,7 @@ PhenoMetrics<- function (RawPath, BolAOI){
 #==============================
 
     
-    #+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+"    #+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     #                                                  Maximum
     #+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     qmax=1
@@ -532,7 +543,7 @@ PhenoMetrics<- function (RawPath, BolAOI){
     }
     Max_Value[,"value"][s]=max
     Max_Time[,"value"][s]=Max_T
-    
+ "   
     #+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     #                                                  Offset
     #+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++

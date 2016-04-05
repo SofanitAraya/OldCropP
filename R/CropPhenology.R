@@ -786,14 +786,14 @@ PhenoMetrics<- function (RawPath, BolAOI){
   crs(BefMaxT)<-crs(ras)
   brk=seq(1,17, by=0.01)
   nbrk=length(brk)
-  plot(BefMaxT$value, main="BeforeMaxT", breaks=brk, col=rev(terrain.colors(nbrk)), axis.arg=list(at=seq(1,17,by=4), labels=seq(1,17,by=4)), zlim=c(1,17))
+  plot(BefMaxT$value, main="BeforeMaxT", breaks=brk, col=rev(terrain.colors(nbrk)), axis.arg=list(at=seq(0,17,by=4), labels=seq(0,17,by=4)), zlim=c(0,17))
   writeRaster(BefMaxT$value, "BeforeMaxT.img", overwrite=TRUE)
   
   AftMaxT=rasterFromXYZ(AfterMaxT)
   crs(AftMaxT)<-crs(ras)
   brk=seq(1,17, by=0.01)
   nbrk=length(brk)
-  plot(AftMaxT$value, main="AfterMaxT", breaks=brk, col=rev(terrain.colors(nbrk)), axis.arg=list(at=seq(1,17,by=4), labels=seq(1,17,by=4)), zlim=c(1,17))
+  plot(AftMaxT$value, main="AfterMaxT", breaks=brk, col=rev(terrain.colors(nbrk)), axis.arg=list(at=seq(0,17,by=4), labels=seq(0,17,by=4)), zlim=c(0,17))
   writeRaster(AftMaxT$value, "AfterMaxT.img", overwrite=TRUE)
 
   Len=rasterFromXYZ(LengthGS)

@@ -545,8 +545,8 @@ PhenoMetrics<- function (RawPath, BolAOI){
       }
       qmax=qmax+1
     }
-    Max_Value[,"value"][s]=max
-    Max_Time[,"value"][s]=Max_T
+    Max_Value[,value[s]=max
+    Max_Time[,value][s]=Max_T
  "   
     #+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     #                                                  Offset

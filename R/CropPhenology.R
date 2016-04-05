@@ -577,7 +577,7 @@ PhenoMetrics<- function (RawPath, BolAOI){
 #    offsetV=AnnualTS[of] 
     offsetT=of
 #fset
-    offsetV=AnnualTs[of]
+    offsetV=AnnualTS[of]
   #trsh2
 
     if ((max-trsh2)<0.05) {

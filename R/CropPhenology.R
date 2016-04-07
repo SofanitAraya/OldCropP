@@ -791,7 +791,7 @@ PhenoMetrics<- function (RawPath, BolAOI){
   
   AftMaxT=rasterFromXYZ(AfterMaxT)
   crs(AftMaxT)<-crs(ras)
-  brk=seq(1,12, by=0.01)
+  brk=seq(0,12, by=0.01)
   nbrk=length(brk)
   plot(AftMaxT$value, main="AfterMaxT", breaks=brk, col=rev(terrain.colors(nbrk)), axis.arg=list(at=seq(0,12,by=2), labels=seq(0,12,by=2)), zlim=c(0,12))
   writeRaster(AftMaxT$value, "AfterMaxT.img", overwrite=TRUE)

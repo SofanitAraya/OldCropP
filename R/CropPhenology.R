@@ -830,7 +830,7 @@ PhenoMetrics<- function (RawPath, BolAOI){
   crs(As)<-crs(ras)
   brk=seq(-6,6, by=0.0001)
   nbrk=length(brk)
-  plot(As$value, main="Asymmetry", breaks=brk, col=rev(terrain.colors(nbrk)), axis.arg=list(at=seq(-6.0,6.0,by=4), labels=seq(-6.0,6.0,by=4)), zlim=c(-6,6))
+  plot(As$value, main="Asymmetry", breaks=brk, col=rev(terrain.colors(nbrk)), axis.arg=list(at=seq(-6.0,6.0,by=3), labels=seq(-6.0,6.0,by=3)), zlim=c(-6,6))
   writeRaster(As$value, "Asymmetry.img", overwrite=TRUE)
   
 

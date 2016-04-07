@@ -732,10 +732,10 @@ PhenoMetrics<- function (RawPath, BolAOI){
   writeRaster(OT$value, "Onset_T.img", overwrite=TRUE)
   
   OV=rasterFromXYZ(Onset_Value)
-  brk=seq(0,0.6, by=0.001)
+  brk=seq(0.1,0.6, by=0.001)
   nbrk=length(brk)
   crs(OV)<-crs(ras)
-  plot(OV$value, main="Onset_V", breaks=brk, col=rev(terrain.colors(nbrk)), axis.arg=list(at=seq(0,0.6,by=0.2), labels=seq(0,0.6,by=0.2)), zlim=c(0,0.6))
+  plot(OV$value, main="Onset_V", breaks=brk, col=rev(terrain.colors(nbrk)), axis.arg=list(at=seq(0.1,0.6,by=0.2), labels=seq(0.1,0.6,by=0.2)), zlim=c(0.1,0.6))
   writeRaster(OV$value, "Onset_V.img", overwrite=TRUE)
 
   MT=rasterFromXYZ(Max_Time)

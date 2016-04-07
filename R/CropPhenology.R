@@ -805,16 +805,16 @@ PhenoMetrics<- function (RawPath, BolAOI){
 
   AA=rasterFromXYZ(Area_After)
   crs(AA)<-crs(ras)
-  brk=seq(0,8, by=0.0001)
+  brk=seq(0,6, by=0.0001)
   nbrk=length(brk)
-  plot(AA$value, main="TINDVIAfterMax", breaks=brk, col=rev(terrain.colors(nbrk)), axis.arg=list(at=seq(0,8,by=2), labels=seq(0,8,by=2)), zlim=c(0,8))
+  plot(AA$value, main="TINDVIAfterMax", breaks=brk, col=rev(terrain.colors(nbrk)), axis.arg=list(at=seq(0,6,by=2), labels=seq(0,6,by=2)), zlim=c(0,6))
   writeRaster(AA$value, "TINDVIAfterMax.img", overwrite=TRUE)
   
   AB=rasterFromXYZ(Area_Before)
   crs(AB)<-crs(ras)
-  brk=seq(0,8, by=0.0001)
+  brk=seq(0,6, by=0.0001)
   nbrk=length(brk)
-  plot(AB$value, main="TINDVIBeforeMax", breaks=brk, col=rev(terrain.colors(nbrk)), axis.arg=list(at=seq(0,8,by=2), labels=seq(0,8,by=2)), zlim=c(0,8))
+  plot(AB$value, main="TINDVIBeforeMax", breaks=brk, col=rev(terrain.colors(nbrk)), axis.arg=list(at=seq(0,6,by=2), labels=seq(0,6,by=2)), zlim=c(0,6))
   writeRaster(AB$value, "TINDVIBeforeMax.img", overwrite=TRUE)
 
 

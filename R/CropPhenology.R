@@ -770,16 +770,16 @@ PhenoMetrics<- function (RawPath, BolAOI){
 
   GUS=rasterFromXYZ(GreenUpSlope)
   crs(GUS)<-crs(ras)
-  brk=seq(0,0.6, by=0.00001)
+  brk=seq(0,0.4, by=0.00001)
   nbrk=length(brk)
-  plot(GUS$value, main="GreenUpSlope", breaks=brk, col=rev(terrain.colors(nbrk)), axis.arg=list(at=seq(0,0.6,by=0.1), labels=seq(0,0.6,by=0.1)),zlim=c(0,0.6))
+  plot(GUS$value, main="GreenUpSlope", breaks=brk, col=rev(terrain.colors(nbrk)), axis.arg=list(at=seq(0,0.4,by=0.1), labels=seq(0,0.4,by=0.1)),zlim=c(0,0.4))
   writeRaster(GUS$value, "GreenUpSlope.img", overwrite=TRUE)
   
   BDS=rasterFromXYZ(BrownDownSlope)
   crs(BDS)<-crs(ras)
-  brk=seq(0,0.6, by=0.00001)
+  brk=seq(0,0.4, by=0.00001)
   nbrk=length(brk)
-  plot(BDS$value, main="BrownDownSlope", breaks=brk, col=rev(terrain.colors(nbrk)), axis.arg=list(at=seq(0,0.6,by=0.1), labels=seq(0,0.6,by=0.1)),zlim=c(0,0.6))
+  plot(BDS$value, main="BrownDownSlope", breaks=brk, col=rev(terrain.colors(nbrk)), axis.arg=list(at=seq(0,0.4,by=0.1), labels=seq(0,0.4,by=0.1)),zlim=c(0,0.4))
   writeRaster(BDS$value, "BrownDownSlope.img", overwrite=TRUE)
   
   BefMaxT=rasterFromXYZ(BeforeMaxT)

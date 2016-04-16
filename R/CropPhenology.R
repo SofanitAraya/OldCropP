@@ -589,7 +589,7 @@ PhenoMetrics<- function (RawPath, BolAOI){
       offsetT=0
       offsetV=0
     }
-    if (offset>20){
+    "if (offset>20){
       if (ofslp[4]>0){
         OffsetT=22
         offsetV=AnnualTS[22]
@@ -606,6 +606,8 @@ PhenoMetrics<- function (RawPath, BolAOI){
       }
       
     }
+    "
+    
     "
     
     j=Max_T #J is the lower bound on down AnnualTS / upeer bound in sequence

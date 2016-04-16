@@ -553,21 +553,22 @@ PhenoMetrics<- function (RawPath, BolAOI){
     #+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     tm=min(AnnualTS[22], AnnualTS[23])
     trsh2=(tm+(tm/10))
-    ofslp=AnnualTS[21]-AnnualTS[20]    
+    ofslp=AnnualTS[20]-AnnualTS[19]    
     crp=TRUE
     ofslp=matrix(ofslp)
-    ofslp[2]=AnnualTS[22]-AnnualTS[21]
-    ofslp[3]=AnnualTS[23]-AnnualTS[22]
+    ofslp[2]=AnnualTS[21]-AnnualTS[20]
+    ofslp[3]=AnnualTS[22]-AnnualTS[21]
+    ofslp[4]=AnnualTS[23]-AnnualTS[22]
     
     minof=abs(ofslp[1])
     
     ofc=1
-    oft=20
+    oft=19
     
-    while (ofc<3) {
+    while (ofc<4) {
       if (minof>abs(ofslp[ofc])){
         minof=ofslp[ofc]
-        oft=ofc+19
+        oft=ofc+18
       }
       ofc=ofc+1
     }

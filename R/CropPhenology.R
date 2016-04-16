@@ -573,7 +573,7 @@ PhenoMetrics<- function (RawPath, BolAOI){
     while (i<23){
       if ((AnnualTS[i]<trsh2) | (ofslp[(i-18)]>0)){
         offsetT=i
-        offsetV=AnnualTs[i]
+        offsetV=AnnualTS[i]
       }
       i=i+1
     }

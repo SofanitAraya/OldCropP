@@ -551,7 +551,8 @@ PhenoMetrics<- function (RawPath, BolAOI){
     #+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     #                                                  Offset
     #+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-    trsh2=(AnnualTS[22]+(AnnualTS[22]/10))
+    tm=min(AnnualTs[22], AnnualTS[23])
+    trsh2=(tm+(tm/10))
     ofslp=AnnualTS[21]-AnnualTS[20]    
     crp=TRUE
     ofslp=matrix(ofslp)
@@ -591,24 +592,24 @@ PhenoMetrics<- function (RawPath, BolAOI){
       offsetT=0
       offsetV=0
     }
-    "if (offset>20){
-      if (ofslp[4]>0){
+    if (offset>20){
+      if (ofslp[3]>0){
         OffsetT=22
         offsetV=AnnualTS[22]
         
       }
-      if (ofslp[3]>0){
+      if (ofslp[2]>0){
         OffsetT=21
         offsetV=AnnualTS[21]
         
       }
-      if (ofslp[2]>0){
+      if (ofslp[1]>0){
         OffsetT=20
         offsetV=AnnualTS[20]
       }
       
     }
-    "
+    
     
     "
     

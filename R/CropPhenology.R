@@ -556,13 +556,14 @@ PhenoMetrics<- function (RawPath, BolAOI){
     ofslp=matrix(ofslp)
     ofslp[2]=AnnualTS[21]-AnnualTS[20]
     ofslp[3]=AnnualTS[22]-AnnualTS[21]
+    ofslp[4]=AnnualTS[23]-AnnualTS[22]
     
     minof=abs(ofslp[1])
     
     ofc=1
     oft=1
     
-    while (ofc<length(ofslp)) {
+    while (ofc<4) {
       if (minof>abs(ofslp[ofc])){
         minof=ofslp[ofc]
         oft=ofc+18
@@ -571,12 +572,16 @@ PhenoMetrics<- function (RawPath, BolAOI){
     }
     i=oft
     while (i<23){
-      if ((AnnualTS[i]<trsh2) | (ofslp[(i-18)]>0)){
+      if ((AnnualTS[i]<trsh2)){
         offsetT=i
         offsetV=AnnualTS[i]
       }
       i=i+1
     }
+    
+    print (offsetT)
+    print (offsetV)
+    print(trsh2)
     
     
     if ((max-trsh2)<0.05) {
@@ -584,7 +589,23 @@ PhenoMetrics<- function (RawPath, BolAOI){
       offsetT=0
       offsetV=0
     }
-    
+    if (offset>20){
+      if (ofslp[4]>0){
+        OffsetT=22
+        offsetV=AnnualTS[22]
+        
+      }
+      if (ofslp[3]>0){
+        OffsetT=21
+        offsetV=AnnualTS[21]
+        
+      }
+      if (ofslp[2]>0){
+        OffsetT=20
+        offsetV=AnnualTS[20]
+      }
+      
+    }
     "
     
     j=Max_T #J is the lower bound on down AnnualTS / upeer bound in sequence

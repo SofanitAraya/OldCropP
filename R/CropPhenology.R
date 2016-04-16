@@ -165,9 +165,9 @@ PhenoMetrics<- function (RawPath, BolAOI){
   raDir=dir(path=RawPath, pattern = c(".img$|.tif$"))
   
   #, pattern="*.img$")
-            
+  
   #shDir=dir(pattern="*.dbf$")
-
+  
   FileLen=length(raDir)
   #filelen=length(raDir)
   
@@ -191,8 +191,8 @@ PhenoMetrics<- function (RawPath, BolAOI){
   #AnnualTS=as.matrix(Onset)
   # s is pixel number
   # r is the number of values for each pixels - 20 for year 2000 and 23 for the other years 
-#  AOI=dir(pattern="*.shp$")
-#  shp=readShapePoly(AOI)
+  #  AOI=dir(pattern="*.shp$")
+  #  shp=readShapePoly(AOI)
   if (BolAOI == TRUE){
     BolAOI=dir(pattern="*.shp$")
     shp=readShapePoly(BolAOI)
@@ -203,14 +203,14 @@ PhenoMetrics<- function (RawPath, BolAOI){
     Points=rasterToPoints(ra)
     shp=rasterToPolygons((ra*0), dissolve=TRUE)
   }
- 
+  
   
   i=1
   try=0
-
+  
   if (FileLen==0){ stop ('No image file obtained in the path mensioned - Check your file type')}
   if (FileLen<23){ stop ('The number of images not complete cover the season - check your image files')}
-
+  
   while (i<(FileLen+1)) {
     ras=raster(raDir[i])
     try[i]=extract (ras,shp, cellnumbers=TRUE)
@@ -218,8 +218,8 @@ PhenoMetrics<- function (RawPath, BolAOI){
   }
   
   try
-
-
+  
+  
   cor=xyFromCell(ras,try[[1]][,"cell"])
   com=cbind(cor,try[[1]])
   
@@ -239,10 +239,10 @@ PhenoMetrics<- function (RawPath, BolAOI){
   BeforeMaxT=com
   AfterMaxT=com
   
-
-
+  
+  
   r=length(try[[1]][,"value"])
-#  Hd=list ("ID","X-Cord"," Y_Cord","T1", "T2", "T3" ,"T4", "T5", "T6", "T7", "T8", "T9", "T10", "T11", "T12", "T13", "T14", "T15", "T16", "T17", "T18", "T19", "T20", "T21", "T22", "T23")  
+  #  Hd=list ("ID","X-Cord"," Y_Cord","T1", "T2", "T3" ,"T4", "T5", "T6", "T7", "T8", "T9", "T10", "T11", "T12", "T13", "T14", "T15", "T16", "T17", "T18", "T19", "T20", "T21", "T22", "T23")  
   Hd=list ("X-Cord"," Y_Cord","T1", "T2", "T3" ,"T4", "T5", "T6", "T7", "T8", "T9", "T10", "T11", "T12", "T13", "T14", "T15", "T16", "T17", "T18", "T19", "T20", "T21", "T22", "T23")  
   AllP=data.frame()
   
@@ -303,7 +303,7 @@ PhenoMetrics<- function (RawPath, BolAOI){
     }
     Max_Value[,"value"][s]=max
     Max_Time[,"value"][s]=Max_T    
-  
+    
     
     #+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     #                                                  Onset 
@@ -517,20 +517,20 @@ PhenoMetrics<- function (RawPath, BolAOI){
     if (AnnualTS[Em]>t){
     onset=Em
     }"
-#don't think this works becasuse the image in MODIS doesn't allow us to gain this- as it uses MVC technique
-
-
-
-
-#    if (onsetV>1){
-#      onsetV=trsh1
-#      onset=Em
-#    }
-
-#==============================
-
+    #don't think this works becasuse the image in MODIS doesn't allow us to gain this- as it uses MVC technique
     
-"    #+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    
+    
+    
+    #    if (onsetV>1){
+    #      onsetV=trsh1
+    #      onset=Em
+    #    }
+    
+    #==============================
+    
+    
+    "    #+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     #                                                  Maximum
     #+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     qmax=1
@@ -551,6 +551,92 @@ PhenoMetrics<- function (RawPath, BolAOI){
     #+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     #                                                  Offset
     #+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    ofslp=AnnualTS[20]-AnnualTS[19]    
+    crp=TRUE
+    ofslp=matrix(ofslp)
+    ofslp[2]=AnnualTS[21]-AnnualTS[20]
+    ofslp[3]=AnnualTS[22]-AnnualTS[21]
+    
+    minof=abs(ofslp[1])
+    
+    ofc=1
+    oft=1
+    
+    while (ofc<length(ofslp)) {
+      if (minof>abs(ofslp[ofc])){
+        minof=ofslp[ofc]
+        oft=ofc+18
+      }
+      ofc=ofc+1
+    }
+    i=oft
+    while (i<23){
+      if ((AnnualTS[i]<trsh2) | (ofslp[(i-18)]>0)){
+        offsetT=i
+        offsetV=AnnualTs[i]
+      }
+      i=i+1
+    }
+    
+    
+    if ((max-trsh2)<0.05) {
+      crp=FALSE
+      offsetT=0
+      offsetV=0
+    }
+    
+    "
+    
+    j=Max_T #J is the lower bound on down AnnualTS / upeer bound in sequence
+    while (j<(FileLen+1)){
+    if (AnnualTS[j]<trsh2){
+    of=j
+    break
+    }
+    j=j+1
+    }
+    
+    of1=AnnualTS[j-1]-AnnualTS[j]
+    of2=(trsh2-AnnualTS[of])
+    x=of2/of1
+    offset=of-x
+    
+    #    offset=of
+    #    offsetV=AnnualTS[of] 
+    offsetT=offset
+    offsetV=trsh2
+    
+    if ((max-trsh2)<0.05) {
+    crp=FALSE
+    offsetT=0
+    offsetV=0
+    }
+    if (offset>20){
+    if (ofslp[3]>0){
+    OffsetT=22
+    offsetV=AnnualTS[22]
+    
+    }
+    if (ofslp[2]>0){
+    OffsetT=21
+    offsetV=AnnualTS[21]
+    
+    }
+    if (ofslp[1]>0){
+    OffsetT=20
+    offsetV=AnnualTS[20]
+    }
+    
+    }
+    "
+    print (offsetT)
+    print (offsetV)
+    
+    Offset_Value[,"value"][s]=offsetV
+    Offset_Time[,"value"][s]= offsetT
+    
+  
+ "   
     ofslp=AnnualTS[21]-AnnualTS[20]    
     crp=TRUE
     ofslp=matrix(ofslp)
@@ -558,7 +644,7 @@ PhenoMetrics<- function (RawPath, BolAOI){
     ofslp[3]=AnnualTS[23]-AnnualTS[22]
     
     
-
+    
     j=Max_T #J is the lower bound on down AnnualTS / upeer bound in sequence
     while (j<(FileLen+1)){
       if (AnnualTS[j]<trsh2){
@@ -572,14 +658,14 @@ PhenoMetrics<- function (RawPath, BolAOI){
     of2=(trsh2-AnnualTS[of])
     x=of2/of1
     offset=of-x
-
-#    offset=of
-#    offsetV=AnnualTS[of] 
+    
+    #    offset=of
+    #    offsetV=AnnualTS[of] 
     offsetT=of
-#fset
+    #fset
     offsetV=AnnualTS[of]
-  #trsh2
-
+    #trsh2
+    
     if ((max-trsh2)<0.05) {
       crp=FALSE
       offsetT=0
@@ -589,7 +675,7 @@ PhenoMetrics<- function (RawPath, BolAOI){
       if (ofslp[3]>0){
         OffsetT=22
         offsetV=AnnualTS[22]
-         
+        
       }
       if (ofslp[2]>0){
         OffsetT=21
@@ -605,13 +691,13 @@ PhenoMetrics<- function (RawPath, BolAOI){
     
     print (offsetT)
     print (offsetV)
-
+    
     Offset_Value[,"value"][s]=offsetV
     Offset_Time[,"value"][s]= offsetT
     
-
-
-  
+    
+    "
+    
     #+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     #                                                Area
     #+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -698,19 +784,19 @@ PhenoMetrics<- function (RawPath, BolAOI){
   
   BeforeMaxT[,"value"]=Max_Time[,"value"]-Onset_Time[,"value"]
   write.table(BeforeMaxT, "BeforeMaxT.txt")
-
+  
   AfterMaxT[,"value"]=Offset_Time[,"value"]-Max_Time[,"value"]
   write.table(AfterMaxT, "AfterMaxT.txt")
   
   #BrownDownSlope=Max_Time
   BrownDownSlope[,"value"]=(Max_Value[,"value"]-Offset_Value[,"value"])/(Offset_Time[,"value"]-Max_Time[,"value"])
   write.table(BrownDownSlope, "BrownDownSlope.txt")
-
+  
   #GreenUpSlope=Max_Time
   GreenUpSlope[,"value"]=(Max_Value[,"value"]-Onset_Value[,"value"])/(Max_Time[,"value"]-Onset_Time[,"value"])
   write.table(GreenUpSlope, "GreenUpSlope.txt")
-
-
+  
+  
   #LengthGS=Max_Time
   LengthGS[,"value"]=(Offset_Time[,"value"]-Onset_Time[,"value"])
   write.table(LengthGS, "LengthGS.txt")
@@ -722,8 +808,8 @@ PhenoMetrics<- function (RawPath, BolAOI){
   
   names(AllP)=Hd
   write.csv(AllP, "AllPixels.txt")
-
-
+  
+  
   OT=rasterFromXYZ(Onset_Time)
   crs(OT)<-crs(ras)
   brk=seq(6,13, by=0.01)
@@ -737,7 +823,7 @@ PhenoMetrics<- function (RawPath, BolAOI){
   crs(OV)<-crs(ras)
   plot(OV$value, main="Onset_V", breaks=brk, col=rev(terrain.colors(nbrk)), axis.arg=list(at=seq(0.1,0.6,by=0.2), labels=seq(0.1,0.6,by=0.2)), zlim=c(0.1,0.6))
   writeRaster(OV$value, "Onset_V.img", overwrite=TRUE)
-
+  
   MT=rasterFromXYZ(Max_Time)
   crs(MT)<-crs(ras)
   brk=seq(8,19, by=1)
@@ -746,7 +832,7 @@ PhenoMetrics<- function (RawPath, BolAOI){
   plot(MT$value, main="Max_T", breaks=brk, col=rev(terrain.colors(nbrk)), axis.arg=list(at=seq(8,19,by=2), labels=seq(8,19,by=2)),zlim=c(8,19))
   writeRaster(MT$value, "Max_T.img", overwrite=TRUE)
   
-
+  
   MV=rasterFromXYZ(Max_Value)
   crs(MV)<-crs(ras)
   brk=seq(0.2,1, by=0.001)
@@ -767,7 +853,7 @@ PhenoMetrics<- function (RawPath, BolAOI){
   nbrk=length(brk)
   plot(OFV$value, main="Offset_V", breaks=brk, col=rev(terrain.colors(nbrk)), axis.arg=list(at=seq(0,0.4,by=0.1), labels=seq(0,0.4,by=0.1)), zlim=c(0,0.4))
   writeRaster(OFV$value, "Offset_V.img", overwrite=TRUE)
-
+  
   GUS=rasterFromXYZ(GreenUpSlope)
   crs(GUS)<-crs(ras)
   brk=seq(0,0.25, by=0.00001)
@@ -795,14 +881,14 @@ PhenoMetrics<- function (RawPath, BolAOI){
   nbrk=length(brk)
   plot(AftMaxT$value, main="AfterMaxT", breaks=brk, col=rev(terrain.colors(nbrk)), axis.arg=list(at=seq(0,12,by=2), labels=seq(0,12,by=2)), zlim=c(0,12))
   writeRaster(AftMaxT$value, "AfterMaxT.img", overwrite=TRUE)
-
+  
   Len=rasterFromXYZ(LengthGS)
   crs(Len)<-crs(ras)
   brk=seq(6,17, by=0.1)
   nbrk=length(brk)
   writeRaster(Len$value, "LengthGS.img", overwrite=TRUE)
   plot(Len$value, main="LengthGS", breaks=brk, col=rev(terrain.colors(nbrk)), axis.arg=list(at=seq(6,17,by=2), labels=seq(6,17,by=2)), zlim=c(6,17))
-
+  
   AA=rasterFromXYZ(Area_After)
   crs(AA)<-crs(ras)
   brk=seq(0,6, by=0.0001)
@@ -816,16 +902,16 @@ PhenoMetrics<- function (RawPath, BolAOI){
   nbrk=length(brk)
   plot(AB$value, main="TINDVIBeforeMax", breaks=brk, col=rev(terrain.colors(nbrk)), axis.arg=list(at=seq(0,6,by=2), labels=seq(0,6,by=2)), zlim=c(0,6))
   writeRaster(AB$value, "TINDVIBeforeMax.img", overwrite=TRUE)
-
-
+  
+  
   AT=rasterFromXYZ(Area_Total)
   crs(AT)<-crs(ras)
   brk=seq(0,8, by=0.001)
   nbrk=length(brk)
   plot(AT$value, main="TINDVI", breaks=brk, col=rev(terrain.colors(nbrk)), axis.arg=list(at=seq(0,8,by=2), labels=seq(0,8,by=2)), zlim=c(0,8))
   writeRaster(AT$value, "TINDVI.img", overwrite=TRUE)
-
-
+  
+  
   As=rasterFromXYZ(Asymmetry)
   crs(As)<-crs(ras)
   brk=seq(-6,6, by=0.0001)
@@ -833,7 +919,7 @@ PhenoMetrics<- function (RawPath, BolAOI){
   plot(As$value, main="Asymmetry", breaks=brk, col=rev(terrain.colors(nbrk)), axis.arg=list(at=seq(-6.0,6.0,by=3), labels=seq(-6.0,6.0,by=3)), zlim=c(-6,6))
   writeRaster(As$value, "Asymmetry.img", overwrite=TRUE)
   
-
+  
   
   
   ##########################====================================##########################
@@ -873,16 +959,16 @@ MultiPointsPlot<- function (N,Id1,Id2,Id3,Id4,Id5){
   APP=as.matrix(AP[Id1,])
   print (APP)
   par(mfrow=c(1,1))
-
+  
   if (N>5){
     warning ('The maximum No of pixel to plot is 5')
-  
-  
+    
+    
     if ((is.numeric(Id1)==FALSE) || (is.numeric(Id2)==FALSE) || (is.numeric(Id3)==FALSE) || (is.numeric(Id4)==FALSE) || (is.numeric(Id5)==FALSE) ){
       stop ('ID should be numeric')
     }
-  
-
+    
+    
     if (missing (Id1) | missing(Id2) | missing (Id3) | missing (Id4) | missing (Id5)){
       stop('Id missed')
     }
@@ -894,14 +980,14 @@ MultiPointsPlot<- function (N,Id1,Id2,Id3,Id4,Id5){
   
   if (N==1){
     warning('only one pixel ploted')
-  
-  
+    
+    
     if ((is.numeric(Id1)==FALSE) ){
       stop ('ID should be numeric')
     }
-  
-  
-  
+    
+    
+    
     if ((Id1>length(AP$T1))){
       stop ('Id out of range')
     }
@@ -914,17 +1000,17 @@ MultiPointsPlot<- function (N,Id1,Id2,Id3,Id4,Id5){
     if (missing (Id1) || missing(Id2)){
       stop('Id missed')
     }
-  
-  
+    
+    
     if ((is.numeric(Id1)==FALSE) || (is.numeric(Id2)==FALSE) ){
       stop ('ID should be numeric')
     }
-  
-
+    
+    
     if ((Id1>length(AP$T1)) || (Id2>length(AP$T1))){
       stop ('Id out of range')
     }
-  
+    
     ts.plot ((ts(as.matrix(AP[Id1,])[4:length(APP)])), (ts(as.matrix(AP[Id2,])[4:length(APP)])), ylim=c(0,1), col=1:2)
     axis(2,  at=seq(0,1,by=0.1))
   }
@@ -932,36 +1018,36 @@ MultiPointsPlot<- function (N,Id1,Id2,Id3,Id4,Id5){
     if ((missing (Id1)) || (missing(Id2)) || (missing (Id3))){
       stop ("Id missed")
     }
-
-  
+    
+    
     if ((is.numeric(Id1)==FALSE) || (is.numeric(Id2)==FALSE) || (is.numeric(Id3)==FALSE) ){
       stop ('ID should be numeric')
     }
-  
-  
+    
+    
     if ((Id1>length(AP$T1)) || (Id2>length(AP$T1)) || (Id3>length(AP$T1))){
       stop ('Id out of range')
     }
-  
+    
     ts.plot ((ts(as.matrix(AP[Id1,])[4:length(APP)])), (ts(as.matrix(AP[Id2,])[4:length(APP)])), (ts(as.matrix(AP[Id3,])[4:length(APP)])), ylim=c(0,1), col=1:3)
     axis(2,  at=seq(0,1,by=0.1))
   }
-   
+  
   if (N==4){
     if (missing (Id1) || missing(Id2) || missing (Id3) || missing (Id4)){
       stop('Id missed')
     }
-  
-  
+    
+    
     if ((is.numeric(Id1)==FALSE) || (is.numeric(Id2)==FALSE) || (is.numeric(Id3)==FALSE) || (is.numeric(Id4)==FALSE) ){
       stop ('ID should be numeric')
     }
-  
-  
+    
+    
     if ((Id1>length(AP$T1)) || (Id2>length(AP$T1)) || (Id3>length(AP$T1)) || (Id4>length(AP$T1))){
       stop ('Id out of range')
     }
-  
+    
     ts.plot ((ts(as.matrix(AP[Id1,])[4:length(APP)])), (ts(as.matrix(AP[Id2,])[4:length(APP)])), (ts(as.matrix(AP[Id3,])[4:length(APP)])), (ts(as.matrix(AP[Id4,])[4:length(APP)])),  ylim=c(0,1), col=1:4)
     axis(2, at=seq(0,1,by=0.1))
   }
@@ -969,17 +1055,17 @@ MultiPointsPlot<- function (N,Id1,Id2,Id3,Id4,Id5){
     if (missing (Id1) || missing(Id2) || missing (Id3) || missing (Id4) || missing (Id5)){
       stop('Id missed')
     }
-
-  
+    
+    
     if ((is.numeric(Id1)==FALSE) || (is.numeric(Id2)==FALSE) || (is.numeric(Id3)==FALSE) || (is.numeric(Id4)==FALSE) || (is.numeric(Id5)==FALSE) ){
       stop ('ID should be numeric')
     }
-  
-  
+    
+    
     if ((Id1>length(AP$T1)) || (Id2>length(AP$T1)) || (Id3>length(AP$T1)) || (Id4>length(AP$T1)) || (Id5>length(AP$T1)) ){
       stop ('Id out of range')
     }
-  
+    
     ts.plot ((ts(as.matrix(AP[Id1,])[4:length(APP)])), (ts(as.matrix(AP[Id2,])[4:length(APP)])), (ts(as.matrix(AP[Id3,])[4:length(APP)])), (ts(as.matrix(AP[Id4,])[4:length(APP)])), (ts(as.matrix(AP[Id5,])[4:length(APP)])), ylim=c(0,1),  col=1:5)
     axis(2, at=seq(0,1,by=0.1))
   }

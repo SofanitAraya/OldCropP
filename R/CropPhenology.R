@@ -953,7 +953,7 @@ PhenoMetrics<- function (RawPath, BolAOI){
   crs(Amp)<-crs(ras)
   brk=seq(0,1, by=0.0001)
   nbrk=length(brk)
-  plot(Amp$value, main="Amplitude", breaks=brk, col=rev(terrain.colors(nbrk)), axis.arg=list(at=seq(0,1,by=0.1), labels=seq(0,1,by=0.1)), zlim=c(0,1))
+  plot(Amp$value, main="Amplitude", breaks=brk, col=rev(terrain.colors(nbrk)), axis.arg=list(at=seq(0,0.7,by=0.1), labels=seq(0,0.7,by=0.1)), zlim=c(0,0.7))
   writeRaster(Amp$value, "Amplitude.img", overwrite=TRUE)
  
   

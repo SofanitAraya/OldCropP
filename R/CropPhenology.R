@@ -103,7 +103,18 @@
 #' OffsetV and OffsetT
 #' 
 #'  
-#' OffsetV and OffsetT are defined as the egetation index value and time when the plant senesence. On the timeseries vegetation curve, OffsetV and OffsetT are defined when the offset threshold value is attained
+#' OffsetV and OffsetT are defined as the vegetation index value and time when the plant senesence. On the timeseries vegetation curve, OffsetV and OffsetT are defined in the following few steps
+#' 
+#' ALGORITHM
+#' 
+#' 1st- Calculate the offset thrushold value (trsh2)
+#' The threshold is defined as 10% above the total non green reference at the end pf the growing season, i.e minimum of the 22 and 23 MODIS imaging periods.
+#' 2nd- the slope of the line between consicutive values between 19th and 23rd image values are calculated.These values are -ve.
+#' 3rd- calculate the minimum of the absolute values of the slope values.
+#' 4th- starting from the minimum curve onward check the value for below trsh2
+#' 5th- In some cases the consicutive +ve slopes indicate the big break (offset), so check if there is posetive slope after 20th image if so that will be considered Offset
+#' 
+#' 
 #' The threshold is defined as 10% above the total non green reference at the end pf the growing season, i.e average of 22 and 23 MODIS imaging periods.
 #' 
 #' --------------
@@ -145,54 +156,25 @@
 
 PhenoMetrics<- function (RawPath, BolAOI){
   
-  # install.packages("shapefiles")
-  #install.packages("raster")
-  #install.packages("maptools")
-  #install.packages("gdal")
+
   require('shapefiles')
-  #library("shapefiles")
   require("raster")
-  #library("raster")
   require("maptools")
-  #library("maptools")
   require("rgdal")
-  #library("rgdal")
   require("xlsx")
   require("rgeos")
   require("grid")
   
   setwd(RawPath)
   raDir=dir(path=RawPath, pattern = c(".img$|.tif$"))
-  
-  #, pattern="*.img$")
-  
-  #shDir=dir(pattern="*.dbf$")
-  
   FileLen=length(raDir)
-  #filelen=length(raDir)
-  
-  #f=system.file(raDir[1], package="raster")
-  
   q=1
   qon=1
   qoff=1
   qmax=1
-  #shd=rasterToPoints(raster(raDir[1]), spatial= FALSE)
-  #shd=read.dbf(shDir[1])
-  #shdb=shd
-  
   par(mfrow=c(1,1))
   par(mar=c(3.5, 2.5, 2.5, 5.5))
-  # r=length(shdb$GRID_CODE)
   s=1
-  ## r counts number of pixels per image
-  # q counts the file numbers under the directory
-  #Onset=shdb$GRID_CODE[1]
-  #AnnualTS=as.matrix(Onset)
-  # s is pixel number
-  # r is the number of values for each pixels - 20 for year 2000 and 23 for the other years 
-  #  AOI=dir(pattern="*.shp$")
-  #  shp=readShapePoly(AOI)
   if (BolAOI == TRUE){
     BolAOI=dir(pattern="*.shp$")
     shp=readShapePoly(BolAOI)
@@ -242,15 +224,8 @@ PhenoMetrics<- function (RawPath, BolAOI){
   
   
   r=length(try[[1]][,"value"])
-  #  Hd=list ("ID","X-Cord"," Y_Cord","T1", "T2", "T3" ,"T4", "T5", "T6", "T7", "T8", "T9", "T10", "T11", "T12", "T13", "T14", "T15", "T16", "T17", "T18", "T19", "T20", "T21", "T22", "T23")  
   Hd=list ("X-Cord"," Y_Cord","T1", "T2", "T3" ,"T4", "T5", "T6", "T7", "T8", "T9", "T10", "T11", "T12", "T13", "T14", "T15", "T16", "T17", "T18", "T19", "T20", "T21", "T22", "T23")  
   AllP=data.frame()
-  
-  #Head="ID X-Cord Y_Cord T1 T2 T3 T4 T5 T6 T7 T8 T9 T10 T11 T12 T13 T14 T15 T16 T17 T18 T19 T20 T21 T22 T23"
-  #AllP=as.data.frame(Head)
-  #write(Head, file="AllPixels.txt", append=TRUE, ncolumns=(length(Head)))
-  #write.xlsx(Head, file="AllPixels.xls", append=TRUE, ncolumns=length(Head), sep=" ")
-  
   while(s>0 & s<(r+1)){ #iterate through the each pixel
     
     #+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -270,21 +245,13 @@ PhenoMetrics<- function (RawPath, BolAOI){
       q=q+1
     }
     
-    print (AnnualTS)
+    #print (AnnualTS)
     cordinate=0
     cordinate[1]=cor[s,1]
     cordinate[2]=cor[s,2]
-    
-    #AP=append(ts(list(s)),append(cordinate,AnnualTS))
-    #AP=append(ts(s),append(cordinate,AnnualTS))
     AP=append(cordinate,AnnualTS)
-    #print (AP)
     AllP=rbind(AllP, AP)
-    
-    
-    
-    #write(append(s,append(cordinate,AnnualTS)), file="AllPixels.txt", append=TRUE, ncolumns=(length(AnnualTS)+3))
-    ts.plot(AnnualTS)
+#    ts.plot(AnnualTS)
     
     #+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     #                                                  Maximum
@@ -345,7 +312,7 @@ PhenoMetrics<- function (RawPath, BolAOI){
       last=slop[i]
     }
     
-    print (ls)
+    #print (ls)
     #------------------------------------------------------------------------------------------------------------------------------
     #maximum of the post negetive records
     R_max=0
@@ -472,18 +439,14 @@ PhenoMetrics<- function (RawPath, BolAOI){
     if (Em>t){
       onset=Em
     }
-    print (Em)
-    print (trsh1)
+    #print (Em)
+    #print (trsh1)
     
-    #    if (onsetV>1){
-    #      onsetV=trsh1
-    #      onset=Em
-    #    }
-    
+  
     #==============================
     
-    print (Em)
-    print (trsh1)
+    #print (Em)
+    #print (trsh1)
     onset=Em
     onsetV=AnnualTS[Em]
     
@@ -495,59 +458,11 @@ PhenoMetrics<- function (RawPath, BolAOI){
     
     Onset_Value[,"value"][s]=onsetV
     Onset_Time[,"value"][s]=onset
-    print (s)
-    print (r)
-    print (onset)
-    print(onsetV)
-    #------------------------------------------------------------------------------------------------------------------------------
-    # point the exact point where thrushold is gained and estimate the time too 
-    "t=((AnnualTS[Em]-trsh1)/(AnnualTS[Em]-AnnualTS[Em-1]))
-    if (t==0){
-    Onset=Em  
-    }
-    if (((t>0) & (AnnualTS[Em]-AnnualTS[Em-1])>0 &(Em>t))){
-    onset=Em-t
-    onsetV= ((AnnualTS[Em]-AnnualTS[Em-1])*(1-t))+AnnualTS[Em-1]
-    }
-    
-    if ((t<0) | (AnnualTS[Em]-AnnualTS[Em-1])<0){
-    onset=Em
-    onsetV=AnnualTS[Em]
-    }
-    if (AnnualTS[Em]>t){
-    onset=Em
-    }"
-    #don't think this works becasuse the image in MODIS doesn't allow us to gain this- as it uses MVC technique
-    
-    
-    
-    
-    #    if (onsetV>1){
-    #      onsetV=trsh1
-    #      onset=Em
-    #    }
-    
-    #==============================
-    
-    
-    "    #+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-    #                                                  Maximum
-    #+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-    qmax=1
-    max=AnnualTS[qmax]
-    Max_T=qmax
-    
-    while (qmax>0 & qmax<FileLen){
-      if ((AnnualTS[qmax]) > max){
-        max=AnnualTS[qmax]
-        #print (max)
-        Max_T=qmax
-      }
-      qmax=qmax+1
-    }
-    Max_Value[,value[s]=max
-    Max_Time[,value][s]=Max_T
- "   
+    #print (s)
+    #print (r)
+    #print (onset)
+    #print(onsetV)
+
     #+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     #                                                  Offset
     #+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -584,9 +499,9 @@ PhenoMetrics<- function (RawPath, BolAOI){
       i=i+1
     }
     
-    print (offsetT)
-    print (offsetV)
-    print(trsh2)
+    #print (offsetT)
+    #print (offsetV)
+    #print(trsh2)
     
     
     if ((max-trsh2)<0.05) {
@@ -613,119 +528,13 @@ PhenoMetrics<- function (RawPath, BolAOI){
     }
     
     
-    "
-    
-    j=Max_T #J is the lower bound on down AnnualTS / upeer bound in sequence
-    while (j<(FileLen+1)){
-    if (AnnualTS[j]<trsh2){
-    of=j
-    break
-    }
-    j=j+1
-    }
-    
-    of1=AnnualTS[j-1]-AnnualTS[j]
-    of2=(trsh2-AnnualTS[of])
-    x=of2/of1
-    offset=of-x
-    
-    #    offset=of
-    #    offsetV=AnnualTS[of] 
-    offsetT=offset
-    offsetV=trsh2
-    
-    if ((max-trsh2)<0.05) {
-    crp=FALSE
-    offsetT=0
-    offsetV=0
-    }
-    if (offset>20){
-    if (ofslp[3]>0){
-    OffsetT=22
-    offsetV=AnnualTS[22]
-    
-    }
-    if (ofslp[2]>0){
-    OffsetT=21
-    offsetV=AnnualTS[21]
-    
-    }
-    if (ofslp[1]>0){
-    OffsetT=20
-    offsetV=AnnualTS[20]
-    }
-    
-    }
-    "
-    print (offsetT)
-    print (offsetV)
+    #print (offsetT)
+    #print (offsetV)
     
     Offset_Value[,"value"][s]=offsetV
     Offset_Time[,"value"][s]= offsetT
     
   
- "   
-    ofslp=AnnualTS[21]-AnnualTS[20]    
-    crp=TRUE
-    ofslp=matrix(ofslp)
-    ofslp[2]=AnnualTS[22]-AnnualTS[21]
-    ofslp[3]=AnnualTS[23]-AnnualTS[22]
-    
-    
-    
-    j=Max_T #J is the lower bound on down AnnualTS / upeer bound in sequence
-    while (j<(FileLen+1)){
-      if (AnnualTS[j]<trsh2){
-        of=j
-        break
-      }
-      j=j+1
-    }
-    
-    of1=AnnualTS[j-1]-AnnualTS[j]
-    of2=(trsh2-AnnualTS[of])
-    x=of2/of1
-    offset=of-x
-    
-    #    offset=of
-    #    offsetV=AnnualTS[of] 
-    offsetT=of
-    #fset
-    offsetV=AnnualTS[of]
-    #trsh2
-    
-    if ((max-trsh2)<0.05) {
-      crp=FALSE
-      offsetT=0
-      offsetV=0
-    }
-    if (offset>20){
-      if (ofslp[3]>0){
-        OffsetT=22
-        offsetV=AnnualTS[22]
-        
-      }
-      if (ofslp[2]>0){
-        OffsetT=21
-        offsetV=AnnualTS[21]
-        
-      }
-      if (ofslp[1]>0){
-        OffsetT=20
-        offsetV=AnnualTS[20]
-      }
-      
-    }
-    
-    print (offsetT)
-    print (offsetV)
-    
-    Offset_Value[,value][s]=offsetV
-    Offset_Time[,value][s]= offsetT
-    
-    
-    "
-    
     #+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     #                                                Area
     #+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -753,9 +562,8 @@ PhenoMetrics<- function (RawPath, BolAOI){
       Area=Area+AnnualTS[start]
       start=start+1
     }
-    print (Area)
-    #if (start==end){ Area=0}
-    
+    #print (Area)
+  
     Area_Total[,"value"][s]=Area
     
     
@@ -767,7 +575,7 @@ PhenoMetrics<- function (RawPath, BolAOI){
       start1=start1+1
     }
     Area1=Area1+AnnualTS[mx]/2
-    print (Area1)
+    #print (Area1)
     if (Area==0){ Area1=0}
     Area_Before[,"value"][s]=Area1
     
@@ -778,7 +586,7 @@ PhenoMetrics<- function (RawPath, BolAOI){
       start2=start2+1
     }
     Area2=Area2+AnnualTS[Ed]/2
-    print (Area2)
+    #print (Area2)
     if (Area==0){ Area2=0}
     Area_After[,"value"][s]=Area2
     
@@ -829,9 +637,9 @@ PhenoMetrics<- function (RawPath, BolAOI){
   LengthGS[,"value"]=(Offset_Time[,"value"]-Onset_Time[,"value"])
   write.table(LengthGS, "LengthGS.txt")
   
- #LengthGS=Max_Time
- Amplitude[,"value"]=(Max_Value[,"value"]-((Onset_Value[,"value"]+Offset_Value[,"value"])/2))
- write.table(Amplitude, "Amplitude.txt")
+  #LengthGS=Max_Time
+  Amplitude[,"value"]=(Max_Value[,"value"]-((Onset_Value[,"value"]+Offset_Value[,"value"])/2))
+  write.table(Amplitude, "Amplitude.txt")
   
   ###===================================================================================================
   par(mfrow=c(2,2))
@@ -993,7 +801,7 @@ MultiPointsPlot<- function (N,Id1,Id2,Id3,Id4,Id5){
   #AP=read.table("Allpixels.txt")
   AP=read.table("AllPixels.txt", header=TRUE, sep=",", strip.white = TRUE)
   APP=as.matrix(AP[Id1,])
-  print (APP)
+  #print (APP)
   par(mfrow=c(1,1))
   
   if (N>5){
